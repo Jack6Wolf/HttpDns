@@ -1,4 +1,0 @@
-
-…
-java:S1319"oThe type of the "list" object should be an interface such as "List" rather than the implementation "ArrayList".(Ü¼ù
-c	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ü¼ù

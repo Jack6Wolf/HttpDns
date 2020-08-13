@@ -1,7 +1,0 @@
-
-d
-java:S3014*"IRemove this use of "ThreadGroup". Prefer the use of "ThreadPoolExecutor".(‹©Öıÿÿÿÿ
-T
-java:S2168"9Remove this dangerous instance of double-checked locking.(µ—ıôúÿÿÿÿ
-t
-java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ìˆ½¢şÿÿÿÿ

@@ -1,17 +1,0 @@
-
-e
-java:S1104N"OMake url a static final constant or non-public and provide accessors if needed.(΄ο‹
-c	java:S100*"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(®κ€΄
-i
-java:S1104I"NMake id a static final constant or non-public and provide accessors if needed.(–“ρόÿÿÿÿ
-j
-java:S1104f"TMake stopTime a static final constant or non-public and provide accessors if needed.(©ΑΆ
-e
-java:S1104Z"PMake data a static final constant or non-public and provide accessors if needed.(΄‹ΉS
-f
-java:S1104l"PMake code a static final constant or non-public and provide accessors if needed.(νθ
-h	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ο£Ζ±ώÿÿÿÿ
-k
-java:S1104`"UMake startTime a static final constant or non-public and provide accessors if needed.(„Κ—£
-f
-java:S1104S"PMake host a static final constant or non-public and provide accessors if needed.(π― 
