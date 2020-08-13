@@ -1,0 +1,26 @@
+
+R	java:S125"<This block of commented-out lines of code should be removed.(ÖË”ß
+†
+java:S1319²"oThe type of the "list" object should be an interface such as "List" rather than the implementation "ArrayList".(¢Ô¨Ì
+V	java:S125v"<This block of commented-out lines of code should be removed.(¹½¯øÿÿÿÿ
+@
+java:S1125¨")Remove the literal "false" boolean value.(ë–Ç®
+W	java:S125Š"<This block of commented-out lines of code should be removed.(ºË“ÿÿÿÿÿ
+V	java:S125z"<This block of commented-out lines of code should be removed.(ñ¥ùšøÿÿÿÿ
+y
+java:S1488Ÿ"bImmediately return this expression instead of assigning it to the temporary variable "dateString".(‚Ùµë
+W	java:S125–"<This block of commented-out lines of code should be removed.(­Ûûÿÿÿÿ
+‚
+java:S1319Å"kThe type of the "map" object should be an interface such as "Map" rather than the implementation "HashMap".(öŠÊê
+x
+java:S1488f"]Immediately return this expression instead of assigning it to the temporary variable "ipUrl".(ğÊÔôıÿÿÿÿ
+O
+java:S2589å"8Remove this expression which always evaluates to "false"(æÃ†
+p
+java:S2293³"YReplace the type specification in this constructor call with the diamond operator ("<>").(±Á§ó
+W	java:S125"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ
+:
+java:S2119·"Save and re-use this "Random".(šŸ«íøÿÿÿÿ
+W	java:S125“"<This block of commented-out lines of code should be removed.(Çˆ÷¦øÿÿÿÿ
+V	java:S125o"<This block of commented-out lines of code should be removed.(øœúÿÿÿÿÿ
+W	java:S125"<This block of commented-out lines of code should be removed.(†òºúÿÿÿÿ

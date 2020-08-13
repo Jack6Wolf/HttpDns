@@ -1,0 +1,19 @@
+
+¢
+java:S2681X"†This line will not be executed conditionally; only the first line of this 2-line block will be. The rest will execute unconditionally.(Ã²¾şÿÿÿÿ
+d
+java:S1104&"NMake id a static final constant or non-public and provide accessors if needed.(İ©…
+h
+java:S1104-"RMake domain a static final constant or non-public and provide accessors if needed.(£ÛÆ
+q
+java:S1104J"VMake ipModelArr a static final constant or non-public and provide accessors if needed.(©Œ©÷øÿÿÿÿ
+
+java:S1319J"uThe type of the "ipModelArr" object should be an interface such as "List" rather than the implementation "ArrayList".(©Œ©÷øÿÿÿÿ
+k
+java:S1104B"PMake time a static final constant or non-public and provide accessors if needed.(•¨ËÂÿÿÿÿÿ
+—
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(˜÷©±
+e
+java:S1104;"OMake ttl a static final constant or non-public and provide accessors if needed.(”ó
+i
+java:S11044"NMake sp a static final constant or non-public and provide accessors if needed.(Øí™¦ùÿÿÿÿ

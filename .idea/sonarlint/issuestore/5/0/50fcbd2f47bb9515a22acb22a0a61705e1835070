@@ -1,0 +1,9 @@
+
+v
+java:S1488;"`Immediately return this expression instead of assigning it to the temporary variable "deviceId".(ÇÝ¢ü
+K
+java:S1874;".Remove this use of "SERIAL"; it is deprecated.(ÇÝ¢ü8ßà‘†¾.
+t
+java:S1488J"^Immediately return this expression instead of assigning it to the temporary variable "appKey".(ÈÐæô
+U
+java:S1118":Add a private constructor to hide the implicit public one.(œ„Â²ùÿÿÿÿ

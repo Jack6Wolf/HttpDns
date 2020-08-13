@@ -1,0 +1,27 @@
+
+˜
+java:S1186—"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(„öô
+V
+java:S5527¦"?Enable server hostname verification on this SSL/TLS connection.(§¼Éç
+C
+java:S4423 ",Change this code to use a stronger protocol.(à¦õ
+E
+java:S2093F"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
+N
+java:S1144"2Remove this unused private "trustAllHosts" method.(¨Ñãşÿÿÿÿ
+—
+java:S1186›"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(áØ¦^
+?	java:S108¾")Either remove or fill this block of code.(”ı¾
+W
+java:S4830—"@Enable server certificate validation on this SSL/TLS connection.(„öô
+P
+java:S4719ü"9Replace charset name argument with StandardCharsets.UTF_8(›ÛÎæ
+V	java:S125t"<This block of commented-out lines of code should be removed.(óÄÌºùÿÿÿÿ
+d
+java:S2095ó"MUse try-with-resources or close this "DataInputStream" in a "finally" clause.(ªÆ° 
+>	java:S108j")Either remove or fill this block of code.(Úîø›
+V
+java:S4830›"@Enable server certificate validation on this SSL/TLS connection.(áØ¦^
+P
+java:S4719ì"9Replace charset name argument with StandardCharsets.UTF_8(¦¥ğ
+g	java:S117ß"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(äÁŠø

@@ -1,0 +1,63 @@
+
+D
+java:S1168’"&Return an empty array instead of null.(¥¹ï8Ô‹í‰¾.
+P
+java:S1444,".Make this "public static isEnable" field final(î§±ëúÿÿÿÿ8Ô‹í‰¾.
+v
+java:S1104,"TMake isEnable a static final constant or non-public and provide accessors if needed.(î§±ëúÿÿÿÿ8Ô‹í‰¾.
+u
+java:S11043"XMake queryManager a static final constant or non-public and provide accessors if needed.(£µÜÉ8ùÜì‰¾.
+z
+java:S11044"XMake scoreManager a static final constant or non-public and provide accessors if needed.(¢¢óıÿÿÿÿ8ùÜì‰¾.
+i	java:S100L"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğƒ˜98Ô‹í‰¾.
+|
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ƒŸü’ûÿÿÿÿ8Ô‹í‰¾.
+{
+java:S3008-"YRename this field "timer_interval" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‚É‚şÿÿÿÿ8Ô‹í‰¾.
+l
+java:S4042ø"NUse "java.nio.file.Files#delete" here for better messages on error conditions.(ƒµ›”8Ô‹í‰¾.
+g	java:S112N"FDefine and throw a dedicated exception instead of using a generic one.(ƒÕÉüÿÿÿÿ8Ô‹í‰¾.
+r
+java:S1104Ñ"TMake runnable a static final constant or non-public and provide accessors if needed.(™èÅ8Ô‹í‰¾.
+D
+java:S1168€"&Return an empty array instead of null.(¥¹ï8Ô‹í‰¾.
+|
+java:S2293¬"YReplace the type specification in this constructor call with the diamond operator ("<>").(…¶¢¨øÿÿÿÿ8Ô‹í‰¾.
+s
+java:S11045"VMake dnsManager a static final constant or non-public and provide accessors if needed.(ì¬¾³8ùÜì‰¾.
+„
+java:S1488"fImmediately return this expression instead of assigning it to the temporary variable "domainInfoList".(Ğëäª8Ô‹í‰¾.
+\
+java:S1117µ"9Rename "task" which hides the field declared at line 294.(¯èÈ‘ûÿÿÿÿ8Ô‹í‰¾.
+|
+java:S1104-"ZMake timer_interval a static final constant or non-public and provide accessors if needed.(‚É‚şÿÿÿÿ8ùÜì‰¾.
+
+java:S1488ö"cImmediately return this expression instead of assigning it to the temporary variable "domainModel".(ËÇ‘8Ô‹í‰¾.
+p
+java:S3008."SRename this field "Instance" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÓÜƒÃ8ùÜì‰¾.
+[
+java:S2168C"9Remove this dangerous instance of double-checked locking.(µ—ıôúÿÿÿÿ8Ô‹í‰¾.
+}
+java:S11042"[Make dnsCacheManager a static final constant or non-public and provide accessors if needed.(Äó¥¤ûÿÿÿÿ8Ô‹í‰¾.
+a
+java:S1155Ó">Use isEmpty() to check whether the collection is empty or not.(ÕéŠßÿÿÿÿÿ8Ô‹í‰¾.
+X	java:S899ø";Do something with the "boolean" value returned by "delete".(ƒµ›”8Ô‹í‰¾.
+s
+java:S1104Ó"UMake beginTime a static final constant or non-public and provide accessors if needed.( ›°ö8Ô‹í‰¾.
+y
+java:S11046"\Make speedtestManager a static final constant or non-public and provide accessors if needed.(‰¶úá8ùÜì‰¾.
+U
+java:S1172…"2Remove this unused method parameter "networkInfo".(¶«³ôûÿÿÿÿ8Ô‹í‰¾.
+D
+java:S1168Š"&Return an empty array instead of null.(‡¥äì8Ô‹í‰¾.
+
+java:S1450"^Remove the "executorService" field and declare it as a local variable in the relevant methods.(šüšòúÿÿÿÿ8¢¤ş‰¾.
+}
+java:S1104’"_Make TimerTaskOldRunTime a static final constant or non-public and provide accessors if needed.(Éúàó8Ô‹í‰¾.
+{	java:S116’"^Rename this field "TimerTaskOldRunTime" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Éúàó8Ô‹í‰¾.
+\
+java:S1155§">Use isEmpty() to check whether the collection is empty or not.(˜öªÂ8Ô‹í‰¾.
+V
+java:S1444-"4Make this "public static timer_interval" field final(‚É‚şÿÿÿÿ8ùÜì‰¾.
+V
+java:S1874…"3Remove this use of "NetworkInfo"; it is deprecated.(¶«³ôûÿÿÿÿ8Ô‹í‰¾.

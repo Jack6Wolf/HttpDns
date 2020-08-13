@@ -1,0 +1,64 @@
+
+[
+java:S2259å"DA "NullPointerException" could be thrown; "cursor" is nullable here.(®¶ëü
+‡
+java:S1319”"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ê ßš
+R
+java:S1144»"5Remove this unused private "deleteDomainInfo" method.(Àºi8Ü¢Æ…¾.
+N
+java:S1197("8Move the array designator from the variable to the type.(µÊ°ë
+[
+java:S1124("EReorder the modifiers to comply with the Java Language Specification.(µÊ°ë
+q
+java:S1192O"VDefine a constant instead of duplicating this literal "DROP TABLE IF EXISTS " 3 times.(äŠË”şÿÿÿÿ
+p
+java:S2293Ÿ"YReplace the type specification in this constructor call with the diamond operator ("<>").(©şõ—
+I
+java:S1135¼"2Complete the task associated to this TODO comment.(‡ñÅ¼
+V	java:S125?"<This block of commented-out lines of code should be removed.(úÜŸÍüÿÿÿÿ
+M
+java:S1135>"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
+[
+java:S2259ñ"DA "NullPointerException" could be thrown; "cursor" is nullable here.(®¶ëü
+f	java:S117»"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Àºi
+[
+java:S2259²"DA "NullPointerException" could be thrown; "cursor" is nullable here.(®¶ëü
+I
+java:S1135¯"2Complete the task associated to this TODO comment.(‡ñÅ¼
+[
+java:S2259¨"DA "NullPointerException" could be thrown; "cursor" is nullable here.(®¶ëü
+p
+java:S2293€"YReplace the type specification in this constructor call with the diamond operator ("<>").(¦ñú
+d	java:S100œ"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÚ´
+i	java:S100Ì"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(è²‰©ÿÿÿÿÿ
+u
+java:S2293Ï"YReplace the type specification in this constructor call with the diamond operator ("<>").(îÛºÖÿÿÿÿÿ
+W	java:S125Í"<This block of commented-out lines of code should be removed.(…¯¡şÿÿÿÿ
+W	java:S125á"<This block of commented-out lines of code should be removed.(ªĞîüÿÿÿÿ
+Œ
+java:S1319Ã"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(â¾­şÿÿÿÿ
+M
+java:S1135J"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
+M
+java:S11352"2Complete the task associated to this TODO comment.(ƒŠ® úÿÿÿÿ
+
+java:S1319ø"yThe type of the "domainModelArr" object should be an interface such as "List" rather than the implementation "ArrayList".(€ÄÇ¹
+u
+java:S2293•"YReplace the type specification in this constructor call with the diamond operator ("<>").(½©”Öúÿÿÿÿ
+Q	java:S125©"<This block of commented-out lines of code should be removed.(»€ÒI
+_
+java:S1192£"HDefine a constant instead of duplicating this literal " WHERE " 3 times.(‡ãíÏ
+p
+java:S2293Å"YReplace the type specification in this constructor call with the diamond operator ("<>").(¦ñú
+W	java:S125Ï"<This block of commented-out lines of code should be removed.(‚’ú²ûÿÿÿÿ
+Q	java:S125K"<This block of commented-out lines of code should be removed.(®û
+k
+java:S1192¡"ODefine a constant instead of duplicating this literal "SELECT * FROM " 5 times.(ü’çĞüÿÿÿÿ
+[
+java:S2259¿"DA "NullPointerException" could be thrown; "cursor" is nullable here.(®¶ëü
+@
+java:S1172b"*Remove this unused method parameter "url".(ğ›©
+Œ
+java:S1319»"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(Ñ”‘Ñşÿÿÿÿ
+]
+java:S1192¨"FDefine a constant instead of duplicating this literal " =? ;" 3 times.(ŠÛÀ¥

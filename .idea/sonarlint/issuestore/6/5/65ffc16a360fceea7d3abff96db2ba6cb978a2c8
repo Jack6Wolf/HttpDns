@@ -1,0 +1,34 @@
+
+g
+java:S1104w"QMake grade a static final constant or non-public and provide accessors if needed.(…‡…
+s
+java:S1104q"]Make finally_fail_time a static final constant or non-public and provide accessors if needed.(‚àÚ
+e
+java:S1104U"OMake rtt a static final constant or non-public and provide accessors if needed.(óò¯è
+d
+java:S1104%"NMake id a static final constant or non-public and provide accessors if needed.(İ©…
+o
+java:S1104O"TMake priority a static final constant or non-public and provide accessors if needed.(Öƒãüÿÿÿÿ
+r
+java:S1104\"WMake success_num a static final constant or non-public and provide accessors if needed.(âÊéºùÿÿÿÿ
+i
+java:S1104A"NMake sp a static final constant or non-public and provide accessors if needed.(Øí™¦ùÿÿÿÿ
+i	java:S116,"ORename this field "d_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ö”Å‰üÿÿÿÿ
+k
+java:S1104,"PMake d_id a static final constant or non-public and provide accessors if needed.(Ö”Å‰üÿÿÿÿ
+—
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(µÂ…
+g	java:S116c"RRename this field "err_num" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(óÍÄî
+k
+java:S1104:"PMake port a static final constant or non-public and provide accessors if needed.(³æœƒûÿÿÿÿ
+e
+java:S1104H"OMake ttl a static final constant or non-public and provide accessors if needed.(”ó
+p	java:S116\"VRename this field "success_num" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(âÊéºùÿÿÿÿ
+s	java:S116j"_Rename this field "finally_success_time" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(œŒŞ'
+i
+java:S1104c"SMake err_num a static final constant or non-public and provide accessors if needed.(óÍÄî
+q	java:S116q"\Rename this field "finally_fail_time" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‚àÚ
+d
+java:S11043"NMake ip a static final constant or non-public and provide accessors if needed.(ãö˜ñ
+u
+java:S1104j"`Make finally_success_time a static final constant or non-public and provide accessors if needed.(œŒŞ'

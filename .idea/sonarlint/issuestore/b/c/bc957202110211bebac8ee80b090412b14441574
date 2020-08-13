@@ -1,0 +1,32 @@
+
+U
+java:S1118":Add a private constructor to hide the implicit public one.(“³±ûÿÿÿÿ
+[
+java:S1124
+"EReorder the modifiers to comply with the Java Language Specification.(ñşÊ
+[
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(Â ÜŸ
+`
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(™ìÙÄÿÿÿÿÿ
+`
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(ş¥üÈÿÿÿÿÿ
+[
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(¡×õĞ
+[
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(üññê
+`
+java:S1124%"EReorder the modifiers to comply with the Java Language Specification.(˜äıúÿÿÿÿ
+`
+java:S1124)"EReorder the modifiers to comply with the Java Language Specification.(ŠòñŸùÿÿÿÿ
+`
+java:S1124-"EReorder the modifiers to comply with the Java Language Specification.(ü‘àœûÿÿÿÿ
+[
+java:S11241"EReorder the modifiers to comply with the Java Language Specification.(Õç§í
+c	java:S1006"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ë¶ÚÍ
+[
+java:S11246"EReorder the modifiers to comply with the Java Language Specification.(ë¶ÚÍ
+7	java:S1318""Add a default case to this switch.(ÜŸ•
+c	java:S100O"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(…èé„
+[
+java:S1124O"EReorder the modifiers to comply with the Java Language Specification.(…èé„
+7	java:S131S""Add a default case to this switch.(ÜŸ•

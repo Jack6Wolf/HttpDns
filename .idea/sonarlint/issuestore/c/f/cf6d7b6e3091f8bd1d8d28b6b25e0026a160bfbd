@@ -1,0 +1,25 @@
+
+d
+java:S1104P"NMake ip a static final constant or non-public and provide accessors if needed.(ãö˜ñ
+i	java:S116""TRename this field "device_sp" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æŞı•
+e
+java:S1104'"OMake dns a static final constant or non-public and provide accessors if needed.(¿€æ«
+o
+java:S1104Z"TMake priority a static final constant or non-public and provide accessors if needed.(šÉğôşÿÿÿÿ
+i	java:S116"TRename this field "device_ip" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÄÈ¥é
+k
+java:S1104""UMake device_sp a static final constant or non-public and provide accessors if needed.(æŞı•
+e
+java:S1104U"OMake ttl a static final constant or non-public and provide accessors if needed.(ş°¼÷
+2
+java:S1643@"Use a StringBuilder instead.(Ÿ¹ê
+r
+java:S1104,"WMake localhostSp a static final constant or non-public and provide accessors if needed.(áš¡²şÿÿÿÿ
+'
+java:S1700P"Rename field "ip"(ãö˜ñ
+k
+java:S11041"UMake rawResult a static final constant or non-public and provide accessors if needed.(ıµÃ«
+h
+java:S1104"RMake domain a static final constant or non-public and provide accessors if needed.(£ÛÆ
+k
+java:S1104"UMake device_ip a static final constant or non-public and provide accessors if needed.(ÄÈ¥é

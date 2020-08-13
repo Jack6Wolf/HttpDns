@@ -1,0 +1,175 @@
+
+@
+java:S1125Ì")Remove the literal "false" boolean value.(éï×İ
+C
+java:S1125p"(Remove the literal "true" boolean value.(°™â¿ûÿÿÿÿ
+j
+java:S1104®"SMake IS_SORT a static final constant or non-public and provide accessors if needed.(ş¡ÍÃ
+E
+java:S1125Æ")Remove the literal "false" boolean value.(íÿÁ½ûÿÿÿÿ
+x	java:S116ƒ"bRename this field "SCHEDULE_SPEED_INTERVAL" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(èÚ€
+{
+java:S1149Í"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(¨âàøÿÿÿÿ
+g	java:S117€"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.( à‡À
+C
+java:S1125q"(Remove the literal "true" boolean value.(˜¥•¾øÿÿÿÿ
+E
+java:S1125›")Remove the literal "false" boolean value.(—ùŸÓøÿÿÿÿ
+g	java:S117„"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¤ §î
+q	java:S116¾"\Rename this field "ERRNUM_PLUGIN_NUM" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(»½¦
+t	java:S116¶"^Rename this field "PRIORITY_PLUGIN_NUM" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Éİîó
+w	java:S116Â"aRename this field "SUCCESSTIME_PLUGIN_NUM" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(÷İ¹å
+v
+java:S1104Æ"_Make DOMAIN_SUPPORT_LIST a static final constant or non-public and provide accessors if needed.(ÿĞ°
+>
+java:S1125v"(Remove the literal "true" boolean value.(ï­Ç
+p	java:S116©"URename this field "DNSPOD_KEY" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(îÖÅ€şÿÿÿÿ
+W	java:S125¤"<This block of commented-out lines of code should be removed.(…”³Æüÿÿÿÿ
+z
+java:S1104‹"cMake SCHEDULE_TIMER_INTERVAL a static final constant or non-public and provide accessors if needed.(¸Ú‘ø
+=
+java:S1125o"(Remove the literal "true" boolean value.(Î«»
+f
+java:S1192H"KDefine a constant instead of duplicating this literal "ConfigText" 4 times.(ÄÊä’üÿÿÿÿ
+x	java:S116™"]Rename this field "HTTPDNS_SERVER_API" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(İ¿ıÿÿÿÿ
+@
+java:S1125¡")Remove the literal "false" boolean value.(Úë¶
+v
+java:S1104¶"_Make PRIORITY_PLUGIN_NUM a static final constant or non-public and provide accessors if needed.(Éİîó
+h	java:S116®"RRename this field "IS_SORT" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ş¡ÍÃ
+w	java:S116¡"\Rename this field "DNSPOD_SERVER_API" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Î ‚ƒıÿÿÿÿ
+p	java:S116"[Rename this field "IP_OVERDUE_DELAY" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Î¨áP
+u	java:S116‡"`Rename this field "SCHEDULE_LOG_INTERVAL" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·Æïo
+@
+java:S1125·")Remove the literal "false" boolean value.(åÃ’İ
+™
+java:S1319™"}The type of the "HTTPDNS_SERVER_API" object should be an interface such as "List" rather than the implementation "ArrayList".(İ¿ıÿÿÿÿ
+y
+java:S1104¡"]Make DNSPOD_SERVER_API a static final constant or non-public and provide accessors if needed.(Î ‚ƒıÿÿÿÿ
+j
+java:S3008è"SRename this field "Instance" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Â¤üÛ
+r	java:S116”"\Rename this field "IS_MY_HTTP_SERVER" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ŠåîÎ
+E
+java:S1125Ø")Remove the literal "false" boolean value.(Äş¼ùÿÿÿÿ
+{
+java:S1149Í"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(¨âàøÿÿÿÿ
+t
+java:S22935"YReplace the type specification in this constructor call with the diamond operator ("<>").(¥†Ğ©øÿÿÿÿ
+9
+java:S3398Ñ"Move this method into "Data".(ßÃÙûÿÿÿÿÿ
+{
+java:S1149ò"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(¨âàøÿÿÿÿ
+s
+java:S1104"\Make IS_DNSPOD_SERVER a static final constant or non-public and provide accessors if needed.(ñ›…˜
+@
+java:S1125˜")Remove the literal "false" boolean value.(Üˆ“
+f	java:S117|"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÙÍ©é
+E
+java:S1125ª")Remove the literal "false" boolean value.(«‰Ü›ÿÿÿÿÿ
+q	java:S116ó"[Rename this field "IS_UDPDNS_SERVER" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‘ô¾
+E
+java:S1444è".Make this "public static Instance" field final(Â¤üÛ
+y
+java:S1104÷"]Make UDPDNS_SERVER_API a static final constant or non-public and provide accessors if needed.(‚İ•²ùÿÿÿÿ
+E
+java:S1125•")Remove the literal "false" boolean value.(¸Ÿ§§üÿÿÿÿ
+t	java:S116ÿ"YRename this field "HTTPDNS_SWITCH" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Àòê¹üÿÿÿÿ
+O
+java:S1118$":Add a private constructor to hide the implicit public one.(ğÂôa
+E
+java:S1125Â")Remove the literal "false" boolean value.(£ÃöØüÿÿÿÿ
+E
+java:S1125³")Remove the literal "false" boolean value.(¶»Ãùÿÿÿÿ
+E
+java:S1125§")Remove the literal "false" boolean value.(ªõ¿Ùüÿÿÿÿ
+j	java:S116¥"TRename this field "DNSPOD_ID" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¶øñÑ
+E
+java:S1125¯")Remove the literal "false" boolean value.(çÒ«Çÿÿÿÿÿ
+t	java:S116Æ"^Rename this field "DOMAIN_SUPPORT_LIST" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÿĞ°
+A
+java:S1444)"+Make this "public static DEBUG" field final(–¢øƒ
+k
+java:S1104è"TMake Instance a static final constant or non-public and provide accessors if needed.(Â¤üÛ
+t
+java:S1104”"]Make IS_MY_HTTP_SERVER a static final constant or non-public and provide accessors if needed.(ŠåîÎ
+w
+java:S1104‡"aMake SCHEDULE_LOG_INTERVAL a static final constant or non-public and provide accessors if needed.(·Æïo
+8
+java:S23865"Make this member "protected".(¥†Ğ©øÿÿÿÿ
+v	java:S116º"`Rename this field "SUCCESSNUM_PLUGIN_NUM" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ûÉ”
+E
+java:S1125º")Remove the literal "false" boolean value.(ÊÖÈùÿÿÿÿ
+s
+java:S1104¾"]Make ERRNUM_PLUGIN_NUM a static final constant or non-public and provide accessors if needed.(»½¦
+g	java:S117Ã"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(•¢‡“
+x
+java:S1104º"aMake SUCCESSNUM_PLUGIN_NUM a static final constant or non-public and provide accessors if needed.(ûÉ”
+f	java:S117x"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÛçÆ©
+E
+java:S1125Ï")Remove the literal "false" boolean value.(‰ …Íùÿÿÿÿ
+E
+java:S1125Ò")Remove the literal "false" boolean value.(…‚Š³øÿÿÿÿ
+r
+java:S1104©"VMake DNSPOD_KEY a static final constant or non-public and provide accessors if needed.(îÖÅ€şÿÿÿÿ
+r
+java:S1104"\Make IP_OVERDUE_DELAY a static final constant or non-public and provide accessors if needed.(Î¨áP
+q	java:S116"[Rename this field "IS_DNSPOD_SERVER" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ñ›…˜
+u
+java:S2293™"YReplace the type specification in this constructor call with the diamond operator ("<>").(İ¿ıÿÿÿÿ
+o
+java:S30083"YRename this field "ConfigText_API" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ã™²•
+y
+java:S1104Â"bMake SUCCESSTIME_PLUGIN_NUM a static final constant or non-public and provide accessors if needed.(÷İ¹å
+x
+java:S11045"]Make domainSupportList a static final constant or non-public and provide accessors if needed.(¥†Ğ©øÿÿÿÿ
+g	java:S117ˆ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÉÈû÷
+k
+java:S1192D"UDefine a constant instead of duplicating this literal "HttpDNSConstantsJson" 3 times.(˜ÓÉË
+i
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 26 to the 15 allowed.(¾Ş›Ç
+•
+java:S1319Æ"~The type of the "DOMAIN_SUPPORT_LIST" object should be an interface such as "List" rather than the implementation "ArrayList".(ÿĞ°
+g
+java:S1104)"QMake DEBUG a static final constant or non-public and provide accessors if needed.(–¢øƒ
+z
+java:S1104ƒ"cMake SCHEDULE_SPEED_INTERVAL a static final constant or non-public and provide accessors if needed.(èÚ€
+h	java:S100:"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(£®…‡şÿÿÿÿ
+
+java:S1104û"cMake HTTPDNS_LOG_SAMPLE_RATE a static final constant or non-public and provide accessors if needed.(Æ–•İúÿÿÿÿ
+c	java:S100C"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(•áõ§
+z	java:S116²"_Rename this field "SPEEDTEST_PLUGIN_NUM" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(é»ÔÏüÿÿÿÿ
+u
+java:S2293ş"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ÿ«Îüÿÿÿÿ
+v
+java:S1104ÿ"ZMake HTTPDNS_SWITCH a static final constant or non-public and provide accessors if needed.(Àòê¹üÿÿÿÿ
+@
+java:S1125")Remove the literal "false" boolean value.(÷°ª
+>
+java:S1125m"(Remove the literal "true" boolean value.(ºÃ²
+p
+java:S2293Æ"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÿĞ°
+E
+java:S1125â")Remove the literal "false" boolean value.(—šÎİıÿÿÿÿ
+—
+java:S13195"|The type of the "domainSupportList" object should be an interface such as "List" rather than the implementation "ArrayList".(¥†Ğ©øÿÿÿÿ
+R
+java:S14445"7Make this "public static domainSupportList" field final(¥†Ğ©øÿÿÿÿ
+s
+java:S1104ó"\Make IS_UDPDNS_SERVER a static final constant or non-public and provide accessors if needed.(‘ô¾
+z
+java:S1104™"^Make HTTPDNS_SERVER_API a static final constant or non-public and provide accessors if needed.(İ¿ıÿÿÿÿ
+|
+java:S1104²"`Make SPEEDTEST_PLUGIN_NUM a static final constant or non-public and provide accessors if needed.(é»ÔÏüÿÿÿÿ
+w	java:S116÷"\Rename this field "UDPDNS_SERVER_API" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‚İ•²ùÿÿÿÿ
+l
+java:S1104¥"UMake DNSPOD_ID a static final constant or non-public and provide accessors if needed.(¶øñÑ
+x	java:S116‹"bRename this field "SCHEDULE_TIMER_INTERVAL" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸Ú‘ø
+f
+java:S3008)"PRename this field "DEBUG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(–¢øƒ
+}	java:S116û"bRename this field "HTTPDNS_LOG_SAMPLE_RATE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Æ–•İúÿÿÿÿ
+E
+java:S1125½")Remove the literal "false" boolean value.(ÉÁêÃşÿÿÿÿ
+E
+java:S1125¤")Remove the literal "false" boolean value.(íüÁĞÿÿÿÿÿ
+E
+java:S1125É")Remove the literal "false" boolean value.(¿¡Ø¿ıÿÿÿÿ

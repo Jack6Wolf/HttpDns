@@ -1,0 +1,33 @@
+
+c
+java:S2095g"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(ÁÀƒøÿÿÿÿ
+U	java:S899q";Do something with the "boolean" value returned by "delete".(²Œ­ûÿÿÿÿ
+U
+java:S1118":Add a private constructor to hide the implicit public one.(‡ÛŸÚıÿÿÿÿ
+i
+java:S4042q"NUse "java.nio.file.Files#delete" here for better messages on error conditions.(²Œ­ûÿÿÿÿ
+Y
+java:S1874"CRemove this use of "getExternalStorageDirectory"; it is deprecated.(äŸäß
+J
+java:S1874"4Remove this use of "getBlockSize"; it is deprecated.(ºÀ¦
+^
+java:S1874/"CRemove this use of "getExternalStorageDirectory"; it is deprecated.(úŠç˜ıÿÿÿÿ
+E
+java:S2093^"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
+U	java:S899d";Do something with the "boolean" value returned by "delete".(²Œ­ûÿÿÿÿ
+E
+java:S2093;"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
+_
+java:S2259v"DA "NullPointerException" could be thrown; "writer" is nullable here.(ÄËªŸÿÿÿÿÿ
+\
+java:S1126!"AReplace this if-then-else statement by a single return statement.(ÁĞæ´şÿÿÿÿ
+\	java:S899="BDo something with the "boolean" value returned by "createNewFile".(Ğ’Íùÿÿÿÿ
+U
+java:S1874":Remove this use of "getAvailableBlocks"; it is deprecated.(¨Ï·óşÿÿÿÿ
+Z
+java:S2259u"DA "NullPointerException" could be thrown; "reader" is nullable here.(°ĞãÇ
+o
+java:S2293\"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ä„ƒ
+\	java:S899e"BDo something with the "boolean" value returned by "createNewFile".(Ğ’Íùÿÿÿÿ
+i
+java:S4042d"NUse "java.nio.file.Files#delete" here for better messages on error conditions.(²Œ­ûÿÿÿÿ
