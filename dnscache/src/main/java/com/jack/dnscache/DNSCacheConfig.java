@@ -22,7 +22,7 @@ import java.util.ArrayList;
 /**
  * Lib库全局 配置文件
  *
- * @version V1.0
+ * @version 1.0
  */
 public class DNSCacheConfig {
 
@@ -88,49 +88,49 @@ public class DNSCacheConfig {
     private static void syncConfig(Data data) {
 
         if (null != data) {
-            DNSCache.timer_interval = Integer.valueOf(data.SCHEDULE_TIMER_INTERVAL);
-            SpeedtestManager.time_interval = Integer.valueOf(data.SCHEDULE_SPEED_INTERVAL);
-            HttpDnsLogManager.time_interval = Integer.valueOf(data.SCHEDULE_LOG_INTERVAL);
-            HttpDnsLogManager.sample_rate = Integer.valueOf(data.HTTPDNS_LOG_SAMPLE_RATE);
-            DnsCacheManager.ip_overdue_delay = Integer.valueOf(data.IP_OVERDUE_DELAY);
-            DNSCache.isEnable = data.HTTPDNS_SWITCH.equals("1") ? true : false;
+            DNSCache.timer_interval = Integer.parseInt(data.SCHEDULE_TIMER_INTERVAL);
+            SpeedtestManager.time_interval = Integer.parseInt(data.SCHEDULE_SPEED_INTERVAL);
+            HttpDnsLogManager.time_interval = Integer.parseInt(data.SCHEDULE_LOG_INTERVAL);
+            HttpDnsLogManager.sample_rate = Integer.parseInt(data.HTTPDNS_LOG_SAMPLE_RATE);
+            DnsCacheManager.ip_overdue_delay = Integer.parseInt(data.IP_OVERDUE_DELAY);
+            DNSCache.isEnable = data.HTTPDNS_SWITCH.equals("1");
 
-            DnsConfig.enableSinaHttpDns = data.IS_MY_HTTP_SERVER.equals("1") == true;
-            DnsConfig.enableDnsPod = data.IS_DNSPOD_SERVER.equals("1") == true;
-            DnsConfig.enableUdpDns = data.IS_UDPDNS_SERVER.equals("1") == true;
+            DnsConfig.enableHttpDns = data.IS_MY_HTTP_SERVER.equals("1");
+            DnsConfig.enableDnsPod = data.IS_DNSPOD_SERVER.equals("1");
+            DnsConfig.enableUdpDns = data.IS_UDPDNS_SERVER.equals("1");
             DnsConfig.DNSPOD_SERVER_API = data.DNSPOD_SERVER_API;
             DnsConfig.UDPDNS_SERVER_API = data.UDPDNS_SERVER_API;
 
             //是否排序
-            ScoreManager.IS_SORT = data.IS_SORT.equals("1") == true;
+            ScoreManager.IS_SORT = data.IS_SORT.equals("1");
 
             String SPEEDTEST_PLUGIN_NUM = data.SPEEDTEST_PLUGIN_NUM;
             if (isNum(SPEEDTEST_PLUGIN_NUM)) {
-                PlugInManager.SpeedTestPluginNum = Float.valueOf(SPEEDTEST_PLUGIN_NUM);
+                PlugInManager.SpeedTestPluginNum = Float.parseFloat(SPEEDTEST_PLUGIN_NUM);
             }
             String PRIORITY_PLUGIN_NUM = data.PRIORITY_PLUGIN_NUM;
             if (isNum(PRIORITY_PLUGIN_NUM)) {
-                PlugInManager.PriorityPluginNum = Float.valueOf(PRIORITY_PLUGIN_NUM);
+                PlugInManager.PriorityPluginNum = Float.parseFloat(PRIORITY_PLUGIN_NUM);
             }
             String SUCCESSNUM_PLUGIN_NUM = data.SUCCESSNUM_PLUGIN_NUM;
             if (isNum(SUCCESSNUM_PLUGIN_NUM)) {
-                PlugInManager.SuccessNumPluginNum = Float.valueOf(SUCCESSNUM_PLUGIN_NUM);
+                PlugInManager.SuccessNumPluginNum = Float.parseFloat(SUCCESSNUM_PLUGIN_NUM);
             }
             String ERRNUM_PLUGIN_NUM = data.ERRNUM_PLUGIN_NUM;
             if (isNum(ERRNUM_PLUGIN_NUM)) {
-                PlugInManager.ErrNumPluginNum = Float.valueOf(ERRNUM_PLUGIN_NUM);
+                PlugInManager.ErrNumPluginNum = Float.parseFloat(ERRNUM_PLUGIN_NUM);
             }
             String SUCCESSTIME_PLUGIN_NUM = data.SUCCESSTIME_PLUGIN_NUM;
             if (isNum(SUCCESSTIME_PLUGIN_NUM)) {
-                PlugInManager.SuccessTimePluginNum = Float.valueOf(SUCCESSTIME_PLUGIN_NUM);
+                PlugInManager.SuccessTimePluginNum = Float.parseFloat(SUCCESSTIME_PLUGIN_NUM);
             }
 
             // arraylist
             domainSupportList.clear();
-            DnsConfig.SINA_HTTPDNS_SERVER_API.clear();
+            DnsConfig.HTTPDNS_SERVER_API.clear();
 
             domainSupportList.addAll(data.DOMAIN_SUPPORT_LIST);
-            DnsConfig.SINA_HTTPDNS_SERVER_API.addAll(data.HTTPDNS_SERVER_API);
+            DnsConfig.HTTPDNS_SERVER_API.addAll(data.HTTPDNS_SERVER_API);
         }
     }
 
@@ -144,6 +144,7 @@ public class DNSCacheConfig {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                Thread.currentThread().setName("Pull-Config-From-Server");
                 try {
                     INetworkRequests netWork = new ApacheHttpClientNetworkRequests();
                     String url = ConfigText_API + "?k=" + AppConfigUtil.getAppKey() + "&v=" + AppConfigUtil.getVersionName();
@@ -158,8 +159,8 @@ public class DNSCacheConfig {
                     String message = e.toString();
                     JSONStringer stringer = new JSONStringer();
                     try {
-                        stringer.object()//
-                                .key("errorMsg").value(message)//
+                        stringer.object()
+                                .key("errorMsg").value(message)
                                 .endObject();
                     } catch (JSONException e1) {
                         e1.printStackTrace();
@@ -251,34 +252,33 @@ public class DNSCacheConfig {
          */
         public String UDPDNS_SERVER_API = "";
         /**
-         * 日志采样率
+         * 日志采样率 默认50
          */
         public String HTTPDNS_LOG_SAMPLE_RATE = "";
         /**
-         * lib库开关
+         * lib库开关 默认开启
          */
         public String HTTPDNS_SWITCH = "";
         /**
-         * 测速间隔时间
+         * 测速间隔时间 默认60s
          */
         public String SCHEDULE_SPEED_INTERVAL = "";
         /**
-         * 日志上传的间隔时间
+         * 日志上传的间隔时间 默认1h
          */
         public String SCHEDULE_LOG_INTERVAL = "";
         /**
-         * timer轮询器的间隔时间
+         * timer轮询器的间隔时间 默认60s
          */
         public String SCHEDULE_TIMER_INTERVAL = "";
         /**
-         * ip数据过期延迟差值
+         * ip数据过期延迟差值 默认60s
          */
         public String IP_OVERDUE_DELAY = "";
         /**
          * 是否启用自己家的HTTP_DNS服务器 默认不启用 | 1启用 0不启用
          */
         public String IS_MY_HTTP_SERVER = null;
-        /**************************************以上部分是新加配置，共8个********************************************/
         /**
          * 自己家HTTP_DNS服务API地址 使用时直接在字符串后面拼接domain地址 |
          * 示例（http://202.108.7.153/dns?domain=）+ domain
@@ -325,7 +325,7 @@ public class DNSCacheConfig {
          */
         public String SUCCESSTIME_PLUGIN_NUM = null;
         /**
-         * 白名单
+         * 白名单 默认可解析所有
          */
         public ArrayList<String> DOMAIN_SUPPORT_LIST = new ArrayList<String>();
 
@@ -344,21 +344,21 @@ public class DNSCacheConfig {
             model.SCHEDULE_SPEED_INTERVAL = "60000";
             model.SCHEDULE_TIMER_INTERVAL = "60000";
             model.IP_OVERDUE_DELAY = "60";
-
-            model.IS_MY_HTTP_SERVER = "1";
+            //httpdns
+            model.IS_MY_HTTP_SERVER = "0";
             model.HTTPDNS_SERVER_API.add("https://getman.cn/mock/v1/httpdns?host=");
-
-            model.IS_DNSPOD_SERVER = "1";
+            //三方httppoddns
+            model.IS_DNSPOD_SERVER = "0";
             model.DNSPOD_SERVER_API = "http://119.29.29.29/d?ttl=1&dn=";
             model.DNSPOD_ID = "";
             model.DNSPOD_KEY = "";
-
-            model.IS_UDPDNS_SERVER = "1";
+            //udpdns
+            model.IS_UDPDNS_SERVER = "0";
             model.UDPDNS_SERVER_API = "114.114.114.114";
-
+            //排序模块
             model.IS_SORT = "1";
-            model.SPEEDTEST_PLUGIN_NUM = "50";
-            model.PRIORITY_PLUGIN_NUM = "50";
+            model.SPEEDTEST_PLUGIN_NUM = "40";
+            model.PRIORITY_PLUGIN_NUM = "30";
             model.SUCCESSNUM_PLUGIN_NUM = "10";
             model.ERRNUM_PLUGIN_NUM = "10";
             model.SUCCESSTIME_PLUGIN_NUM = "10";

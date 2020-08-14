@@ -1,28 +1,41 @@
 package com.jack.dnscache.speedtest.impl;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import android.text.TextUtils;
 
 import com.jack.dnscache.speedtest.BaseSpeedTest;
 import com.jack.dnscache.speedtest.SpeedtestManager;
 
-public class PingTest extends BaseSpeedTest{
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+/**
+ * 发送ICMP包，获取RTT值
+ */
+public class PingTest extends BaseSpeedTest {
 
     @Override
     public int speedTest(String ip, String host) {
         try {
-            return Ping.runcmd("ping -c1 -s1 -w1 " + ip);
+            //-c 1:ping的次数 -s 1：计数跃点的时间戳  -w 1：等待每次回复的超时时间
+            return Ping.runcmd("ping -c 1 " + ip);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return SpeedtestManager.OCUR_ERROR;
     }
 
+    @Override
+    public int getPriority() {
+        return 0;
+    }
+
+    @Override
+    public boolean isActivate() {
+        return true;
+    }
+
     public static class Ping {
-        // ping -c1 -s1 -w1 www.baidu.com //-w 超时单位是s
         private static final String TAG_BYTES_FROM = "bytes from ";
 
         public static int runcmd(String cmd) throws Exception {
@@ -60,15 +73,5 @@ public class PingTest extends BaseSpeedTest{
             }
             return false;
         }
-    }
-
-    @Override
-    public int getPriority() {
-        return 0;
-    }
-
-    @Override
-    public boolean isActivate() {
-        return false;
     }
 }

@@ -115,16 +115,16 @@ public class DnsCacheManager extends DNSCacheDatabaseHelper implements IDnsCache
             ipModel.sp = domainModel.sp;
 
             domainModel.ipModelArr.add(ipModel);
-
+            //ip的ttl时间赋值给domain TTL
             domainTTL = Math.min(domainTTL, Integer.valueOf(ipModel.ttl));
 
         }
-
+        //就是ip的ttl时间
         domainModel.ttl = String.valueOf(domainTTL);
 
-        if (domainModel != null && domainModel.ipModelArr != null && domainModel.ipModelArr.size() > 0) {
+        if (domainModel.ipModelArr.size() > 0) {
             // 插入数据库
-            domainModel = super.addDomainModel(dnsPack.domain, dnsPack.localhostSp, domainModel);
+            domainModel = super.addDomainModel(dnsPack.localhostSp, domainModel);
             // 插入内存缓存
             addMemoryCache(domainModel.domain, domainModel);
         }
@@ -185,35 +185,21 @@ public class DnsCacheManager extends DNSCacheDatabaseHelper implements IDnsCache
 
 
     /**
-     * 添加url缓存
-     *
-     * @param model
+     * 添加domain至缓存
      */
     @Override
-    public void addMemoryCache(String url, DomainModel model) {
-
-        if (model == null) return;
+    public void addMemoryCache(String domain, DomainModel model) {
         if (model.ipModelArr == null) return;
         if (model.ipModelArr.size() <= 0) return;
         for (IpModel ipModel : model.ipModelArr) {
             if (ipModel == null) return;
         }
-
-        // 检测下缓存中是否存在， 如果存在删除旧数据在添加
-        DomainModel temp = data.get(url);
-        if (temp != null) {
-            data.remove(url);
-        }
-
-        data.put(url, model);
+        data.put(domain, model);
     }
 
 
     /**
      * 检测是否过期，提前3秒刷一下
-     *
-     * @param domainModel
-     * @return
      */
     private boolean isExpire(DomainModel domainModel) {
         return isExpire(domainModel, -3);
@@ -221,9 +207,6 @@ public class DnsCacheManager extends DNSCacheDatabaseHelper implements IDnsCache
 
     /**
      * 检测是否过期
-     *
-     * @param domainModel
-     * @return
      */
     private boolean isExpire(DomainModel domainModel, long difference) {
         long queryTime = Long.parseLong(domainModel.time) / 1000;
@@ -236,6 +219,5 @@ public class DnsCacheManager extends DNSCacheDatabaseHelper implements IDnsCache
     public void setSpeedInfo(List<IpModel> ipModels) {
         updateIpInfo(ipModels);
     }
-
 
 }

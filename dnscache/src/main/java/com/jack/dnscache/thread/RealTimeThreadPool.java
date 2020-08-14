@@ -7,6 +7,9 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * 线程池，专门管理测速和上传日志
+ */
 public class RealTimeThreadPool {
     private static final Object lock = new Object();
     private static RealTimeThreadPool mInstance;
@@ -18,7 +21,7 @@ public class RealTimeThreadPool {
                 if (null == mInstance) {
                     mInstance = new RealTimeThreadPool();
                     executorService = new ThreadPoolExecutor(1, 100, 120, TimeUnit.SECONDS, new SynchronousQueue<Runnable>(),
-                            new DefaultThreadFactory(),new ThreadPoolExecutor.DiscardPolicy());
+                            new DefaultThreadFactory(), new ThreadPoolExecutor.DiscardPolicy());
                 }
             }
         }

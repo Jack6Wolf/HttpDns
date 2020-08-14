@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.jack.dnscache.model;
 
@@ -7,14 +7,30 @@ import org.json.JSONException;
 import org.json.JSONStringer;
 
 /**
- *
- * 项目名称: DNSCache 类名称: HttpDnsPack 类描述:
- * 将httpdns返回的数据封装一层，方便日后httpdns接口改动不影响数据库模型。 并且该接口还会标识httpdns错误之后的一些信息用来上报 创建人:
- * fenglei 创建时间: 2015-3-30 上午11:20:11
- * 
- * 修改人: 修改时间: 修改备注:
- * 
- * @version V1.0
+ * 将httpdns返回的数据封装一层，方便日后httpdns接口改动不影响数据库模型。
+ * 并且该接口还会标识httpdns错误之后的一些信息用来上报
+ * 格式：{
+ *     "domain": "api.weibo.cn",
+ *     "device_ip": "10.209.70.192",
+ *     "device_sp": "0",
+ *     "dns": [
+ *         {
+ *             "priority": "0",
+ *             "ip": "123.125.105.231",
+ *             "ttl": "60"
+ *         },
+ *         {
+ *             "priority": "0",
+ *             "ip": "123.125.105.246",
+ *             "ttl": "60"
+ *         },
+ *         {
+ *             "priority": "0",
+ *             "ip": "202.108.7.133",
+ *             "ttl": "60"
+ *         }
+ *     ]
+ * }
  */
 public class HttpDnsPack {
 
@@ -70,6 +86,36 @@ public class HttpDnsPack {
         return str;
     }
 
+    public String toJson() {
+        JSONStringer jsonStringer = new JSONStringer();
+        try {
+            StringBuilder ipArrayStr = new StringBuilder();
+            ipArrayStr.append("[");
+            if (null != dns) {
+                for (IP ip : dns) {
+                    ipArrayStr.append(ip.toJson() + ",");
+                }
+            }
+            if (ipArrayStr.toString().endsWith(",")) {
+                ipArrayStr.deleteCharAt(ipArrayStr.length() - 1);
+            }
+            ipArrayStr.append("]");
+
+            jsonStringer.object()//
+                    .key("domain").value(domain)//
+                    .key("device_ip").value(device_ip)//
+                    .key("device_sp").value(device_sp)//
+                    .key("localhostSp").value(localhostSp)//
+                    .key("rawResult").value(rawResult)//
+                    .key("ipArray").value(ipArrayStr.toString())//
+                    .endObject();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "{}";
+        }
+        return jsonStringer.toString();
+    }
+
     /**
      * A记录相关字段信息
      */
@@ -118,36 +164,6 @@ public class HttpDnsPack {
             return jsonStringer.toString();
         }
 
-    }
-
-    public String toJson() {
-        JSONStringer jsonStringer = new JSONStringer();
-        try {
-            StringBuilder ipArrayStr = new StringBuilder();
-            ipArrayStr.append("[");
-            if (null != dns) {
-                for (IP ip : dns) {
-                    ipArrayStr.append(ip.toJson() + ",");
-                }
-            }
-            if (ipArrayStr.toString().endsWith(",")) {
-                ipArrayStr.deleteCharAt(ipArrayStr.length() - 1);
-            }
-            ipArrayStr.append("]");
-
-            jsonStringer.object()//
-                    .key("domain").value(domain)//
-                    .key("device_ip").value(device_ip)//
-                    .key("device_sp").value(device_sp)//
-                    .key("localhostSp").value(localhostSp)//
-                    .key("rawResult").value(rawResult)//
-                    .key("ipArray").value(ipArrayStr.toString())//
-                    .endObject();
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return "{}";
-        }
-        return jsonStringer.toString();
     }
 
 }

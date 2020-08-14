@@ -4,7 +4,7 @@ import com.jack.dnscache.DNSCacheConfig;
 import com.jack.dnscache.Tools;
 import com.jack.dnscache.dnsp.impl.HttpPodDns;
 import com.jack.dnscache.dnsp.impl.LocalDns;
-import com.jack.dnscache.dnsp.impl.SinaHttpDns;
+import com.jack.dnscache.dnsp.impl.CustomHttpDns;
 import com.jack.dnscache.dnsp.impl.UdpDns;
 import com.jack.dnscache.log.HttpDnsLogManager;
 import com.jack.dnscache.model.HttpDnsPack;
@@ -17,7 +17,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * dns解析
- * SinaHttpDns httpdns方式解析
+ * CustomHttpDns httpdns方式解析
  * HttpPodDns 依赖第三方dns服务商解析
  * UdpDns 直接udp方式去权威dns服务器解析
  * LocalDns 采用原生方式解析
@@ -28,12 +28,15 @@ public class DnsManager implements IDns {
     private ArrayList<String> debugInfo = new ArrayList<String>();
 
     public DnsManager() {
-        mDnsProviders.add(new SinaHttpDns()); //httpdns方式解析
+        mDnsProviders.add(new CustomHttpDns()); //httpdns方式解析
         mDnsProviders.add(new HttpPodDns()); //依赖第三方dns服务商解析
         mDnsProviders.add(new UdpDns()); //udp方式去权威dns服务器解析
         mDnsProviders.add(new LocalDns()); //采用原生方式解析
     }
 
+    /**
+     * 根据优先级获取，谁先回来结果则终止该方法
+     */
     @Override
     public HttpDnsPack requestDns(String domain) {
         Collections.sort(mDnsProviders, new Comparator<IDnsProvider>() {
@@ -59,7 +62,7 @@ public class DnsManager implements IDns {
                             debugInfo.add(dnsPack.rawResult + "[from:" + dp.getClass().getSimpleName() + "]");
                         }
                     }
-
+                    //获取wifi的ssid
                     dnsPack.localhostSp = NetworkManager.getInstance().getSPID();
                     if (!dnsPack.device_sp.equals(dnsPack.localhostSp)) {
                         HttpDnsLogManager.getInstance().writeLog(HttpDnsLogManager.TYPE_ERROR, HttpDnsLogManager.ACTION_ERR_SPINFO, dnsPack.toJson());

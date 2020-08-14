@@ -18,10 +18,10 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while (true){
+                while (true) {
                     getIp();
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(5000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
         getIp();
+
     }
 
     private void getIp() {

@@ -1,26 +1,24 @@
 /**
- * 
+ *
  */
 package com.jack.dnscache.dnsp;
+
+import com.jack.dnscache.model.HttpDnsPack;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.jack.dnscache.model.HttpDnsPack;
-
 /**
  *
- * 项目名称: DNSCache 类名称: IJsonParser 类描述: 创建人: fenglei 创建时间: 2015-3-30 下午3:37:05
- * 
- * 修改人: 修改时间: 修改备注:
- * 
- * @version V1.0
+ * httpdns server请求json解析
+ *
+ * @version 1.0
  */
 public interface IJsonParser {
 
     public HttpDnsPack JsonStrToObj(String jsonStr) throws Exception;
 
-    public class JavaJSON_SINAHTTPDNS implements IJsonParser {
+    public class JavaJSON_HTTPDNS implements IJsonParser {
 
         @Override
         public HttpDnsPack JsonStrToObj(String jsonStr) throws Exception {

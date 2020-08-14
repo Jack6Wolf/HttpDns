@@ -50,6 +50,10 @@ public class DNSCache {
     private static Context sContext;
     private static Object lock = new Object();
     /**
+     * 定时器休眠时间
+     */
+    public final int sleepTime = timer_interval;
+    /**
      * 缓存管理
      */
     public IDnsCache dnsCacheManager = null;
@@ -69,6 +73,68 @@ public class DNSCache {
      * 专为本次测速提供数据来源
      */
     public ISpeedtest speedtestManager = null;
+    /**
+     * TimerTask 运行时间
+     */
+    public long TimerTaskOldRunTime = 0;
+
+    /**
+     * 正在更新的domain任务集合
+     */
+    private ConcurrentHashMap<String, UpdateTask> mRunningTasks = new ConcurrentHashMap<String, UpdateTask>();
+    /**
+     * 定时器Obj
+     */
+    private ScheduledExecutorService executorService;
+    /**
+     * 上次测速时间
+     */
+    private long lastSpeedTime;
+
+    // ///////////////////////////////////////////////////////////////////////////////////
+    /**
+     * 上次日志上传时间
+     */
+    private long lastLogTime;
+    /**
+     * 定时器任务
+     */
+    private Runnable task = new Runnable() {
+
+        @Override
+        public void run() {
+            TimerTaskOldRunTime = System.currentTimeMillis();
+            //无网络情况下不执行任何后台任务操作
+            if (NetworkManager.Util.getNetworkType() == Constants.NETWORK_TYPE_UNCONNECTED || NetworkManager.Util.getNetworkType() == Constants.MOBILE_UNKNOWN) {
+                return;
+            }
+            /************************* 更新过期数据 ********************************/
+            Thread.currentThread().setName("HTTP DNS TimerTask");
+            //取出过期domain数据
+            final ArrayList<DomainModel> list = dnsCacheManager.getExpireDnsCache();
+            for (DomainModel model : list) {
+                //更新
+                checkUpdates(model.domain, false);
+            }
+
+            long now = System.currentTimeMillis();
+            /************************* 测速逻辑 ********************************/
+            if (now - lastSpeedTime > SpeedtestManager.time_interval - 3) {
+                lastSpeedTime = now;
+                RealTimeThreadPool.getInstance().execute(new SpeedTestTask());
+            }
+
+            /************************* 日志上报相关 ********************************/
+            now = System.currentTimeMillis();
+            if (HttpDnsLogManager.LOG_UPLOAD_SWITCH && now - lastLogTime > HttpDnsLogManager.time_interval) {
+                lastLogTime = now;
+                // 判断当前是wifi网络才能上传
+                if (NetworkManager.Util.getNetworkType() == Constants.NETWORK_TYPE_WIFI) {
+                    RealTimeThreadPool.getInstance().execute(new LogUpLoadTask());
+                }
+            }
+        }
+    };
 
     public DNSCache(Context ctx) {
         dnsCacheManager = new DnsCacheManager(ctx);
@@ -76,8 +142,11 @@ public class DNSCache {
         scoreManager = new ScoreManager();
         dnsManager = new DnsManager();
         speedtestManager = new SpeedtestManager();
+        //开启60s轮询任务
         startTimer();
     }
+
+    // ///////////////////////////////////////////////////////////////////////////////////
 
     public static DNSCache getInstance() {
         if (null == Instance) {
@@ -91,7 +160,8 @@ public class DNSCache {
     }
 
     /**
-     * 初始化建议放在Application中处理
+     * 初始化
+     * 建议放在Application中处理
      */
     public static void Init(Context ctx) {
         if (null == ctx) {
@@ -131,30 +201,31 @@ public class DNSCache {
     public DomainInfo[] getDomainServerIp(String url) {
         String host = Tools.getHostName(url);
         if (isEnable) {
+            //如果直接是ip的话直接处理返回
             if (!TextUtils.isEmpty(host) && Tools.isIPV4(host)) {
                 DomainInfo[] info = new DomainInfo[1];
                 info[0] = new DomainInfo("", url, "");
                 return info;
             }
-            // 查询domain对应的server ip数组
+            // 根据sp 查询domain对应的server ip数组
             final DomainModel domainModel = queryManager.queryDomainIp(String.valueOf(NetworkManager.getInstance().getSPID()), host);
 
 
             // 如果本地cache 和 内置数据都没有 返回null，然后马上查询数据
             if (null == domainModel || domainModel.id == -1) {
-                this.checkUpdates(host, true);
+                checkUpdates(host, true);
                 if (null == domainModel) {
                     return null;
                 }
             }
 
             HttpDnsLogManager.getInstance().writeLog(HttpDnsLogManager.TYPE_INFO, HttpDnsLogManager.ACTION_INFO_DOMAIN, domainModel.tojson(), true);
-
+            //过滤一下无效ip
             ArrayList<IpModel> result = filterInvalidIp(domainModel.ipModelArr);
             String[] scoreIpArray = scoreManager.ListToArr(result);
 
             if (scoreIpArray == null || scoreIpArray.length == 0) {
-                return null; // 排序错误 终端后续流程
+                return null; // 转换错误 终端后续流程
             }
 
             // 转换成需要返回的数据模型
@@ -182,13 +253,12 @@ public class DNSCache {
         return result;
     }
 
+    /**
+     * 是否在白名单里面
+     */
     private boolean isSupport(String host) {
         return (DNSCacheConfig.domainSupportList.size() == 0) || (DNSCacheConfig.domainSupportList.contains(host));
     }
-
-    // ///////////////////////////////////////////////////////////////////////////////////
-
-    private ConcurrentHashMap<String, UpdateTask> mRunningTasks = new ConcurrentHashMap<String, UpdateTask>();
 
     /**
      * 从httpdns 服务器重新拉取数据
@@ -204,13 +274,16 @@ public class DNSCache {
                     public void run() {
                         Thread.currentThread().setName("Get Http Dns Data");
                         getHttpDnsData(host);
+                        //移除任务
                         mRunningTasks.remove(host);
                         if (needSpeedTest) {
+                            //测速模块
                             RealTimeThreadPool.getInstance().execute(new SpeedTestTask());
                         }
                     }
                 });
                 mRunningTasks.put(host, updateTask);
+                //开启新线程获取httpdns
                 updateTask.start();
             } else {
                 long beginTime = task.getBeginTime();
@@ -223,7 +296,57 @@ public class DNSCache {
         }
     }
 
-    static class UpdateTask {
+    /**
+     * 根据host从server获取dns数据
+     */
+    private final DomainModel getHttpDnsData(String host) {
+
+        // 从server获取最新dns数据
+        HttpDnsPack httpDnsPack = dnsManager.requestDns(host);
+
+        if (httpDnsPack == null) {
+            return null; // 没有从dns服务器获取正确的数据。必须中断下面流程
+        }
+
+        HttpDnsLogManager.getInstance().writeLog(HttpDnsLogManager.TYPE_INFO, HttpDnsLogManager.ACTION_INFO_DOMAIN, httpDnsPack.toJson(),
+                true);
+        // 插入本地cache和数据库
+        DomainModel domainModel = dnsCacheManager.insertDnsCache(httpDnsPack);
+
+        return domainModel;
+    }
+
+    /**
+     * 启动定时器
+     */
+    private void startTimer() {
+        executorService = new ScheduledThreadPoolExecutor(1);
+        executorService.scheduleAtFixedRate(task, 0, sleepTime, TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * 定时器还多久启动
+     */
+    public long getTimerDelayedStartTime() {
+        return (sleepTime - (System.currentTimeMillis() - TimerTaskOldRunTime)) / 1000;
+    }
+
+    /**
+     * 网络环境发生变化 刷新缓存数据 暂时先不需要 预处理逻辑。 用户直接请求的时候会更新数据。 （会有一次走本地dns ，
+     * 后期优化这个方法，主动请求缓存的数据）
+     *
+     * @param networkInfo
+     */
+    public void onNetworkStatusChanged(NetworkInfo networkInfo) {
+        if (null != dnsCacheManager) {
+            dnsCacheManager.clearMemoryCache();
+        }
+    }
+
+    /**
+     * 更新任务
+     */
+    private static class UpdateTask {
 
         public Runnable runnable;
 
@@ -246,112 +369,13 @@ public class DNSCache {
     }
 
     /**
-     * 根据 host 更新数据
-     *
-     * @param host
-     */
-    private final DomainModel getHttpDnsData(String host) {
-
-        // 获取 httpdns 数据
-        HttpDnsPack httpDnsPack = dnsManager.requestDns(host);
-
-        if (httpDnsPack == null) {
-            return null; // 没有从htppdns服务器获取正确的数据。必须中断下面流程
-        }
-
-        HttpDnsLogManager.getInstance().writeLog(HttpDnsLogManager.TYPE_INFO, HttpDnsLogManager.ACTION_INFO_DOMAIN, httpDnsPack.toJson(),
-                true);
-        // 插入本地 cache
-        DomainModel domainModel = dnsCacheManager.insertDnsCache(httpDnsPack);
-
-        return domainModel;
-    }
-
-    // ///////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * 定时器休眠时间
-     */
-    public final int sleepTime = timer_interval;
-
-    /**
-     * 启动定时器
-     */
-    private void startTimer() {
-        executorService = new ScheduledThreadPoolExecutor(1);
-        executorService.scheduleAtFixedRate(task, 0, sleepTime, TimeUnit.MILLISECONDS);
-    }
-
-    /**
-     * 定时器Obj
-     */
-    private ScheduledExecutorService executorService;
-
-    /**
-     * TimerTask 运行时间
-     */
-    public long TimerTaskOldRunTime = 0;
-    /**
-     * 上次测速时间
-     */
-    private long lastSpeedTime;
-    /**
-     * 上次日志上传时间
-     */
-    private long lastLogTime;
-
-    /**
-     * 定时器还多久启动
-     */
-    public long getTimerDelayedStartTime() {
-        return (sleepTime - (System.currentTimeMillis() - TimerTaskOldRunTime)) / 1000;
-    }
-
-    /**
-     * 定时器任务
-     */
-    private Runnable task = new Runnable() {
-
-        @Override
-        public void run() {
-            TimerTaskOldRunTime = System.currentTimeMillis();
-            //无网络情况下不执行任何后台任务操作
-            if (NetworkManager.Util.getNetworkType() == Constants.NETWORK_TYPE_UNCONNECTED || NetworkManager.Util.getNetworkType() == Constants.MOBILE_UNKNOWN) {
-                return;
-            }
-            /************************* 更新过期数据 ********************************/
-            Thread.currentThread().setName("HTTP DNS TimerTask");
-            final ArrayList<DomainModel> list = dnsCacheManager.getExpireDnsCache();
-            for (DomainModel model : list) {
-                checkUpdates(model.domain, false);
-            }
-
-            long now = System.currentTimeMillis();
-            /************************* 测速逻辑 ********************************/
-            if (now - lastSpeedTime > SpeedtestManager.time_interval - 3) {
-                lastSpeedTime = now;
-                RealTimeThreadPool.getInstance().execute(new SpeedTestTask());
-            }
-
-            /************************* 日志上报相关 ********************************/
-            now = System.currentTimeMillis();
-            if (HttpDnsLogManager.LOG_UPLOAD_SWITCH && now - lastLogTime > HttpDnsLogManager.time_interval) {
-                lastLogTime = now;
-                // 判断当前是wifi网络才能上传
-                if (NetworkManager.Util.getNetworkType() == Constants.NETWORK_TYPE_WIFI) {
-                    RealTimeThreadPool.getInstance().execute(new LogUpLoadTask());
-                }
-            }
-        }
-    };
-
-    /**
-     * 测速模块
+     * 测速模块，供ip排序模块使用
      */
     private class SpeedTestTask implements Runnable {
 
         @Override
         public void run() {
+            //获取缓存中全部的 DomainModel
             ArrayList<DomainModel> list = dnsCacheManager.getAllMemoryCache();
             updateSpeedInfo(list);
         }
@@ -360,26 +384,33 @@ public class DNSCache {
             for (DomainModel domainModel : list) {
                 ArrayList<IpModel> ipArray = domainModel.ipModelArr;
                 if (ipArray == null || ipArray.size() < 1) {
+                    //单个ip不用排序了
                     continue;
                 }
                 for (IpModel ipModel : ipArray) {
+                    //根据测速模块的
                     int rtt = speedtestManager.speedTest(ipModel.ip, domainModel.domain);
                     boolean succ = rtt > SpeedtestManager.OCUR_ERROR;
                     if (succ) {
                         ipModel.rtt = String.valueOf(rtt);
-                        ipModel.success_num = String.valueOf((Integer.valueOf(ipModel.success_num) + 1));
+                        //算作链接成功一次
+                        ipModel.success_num = String.valueOf((Integer.parseInt(ipModel.success_num) + 1));
                         ipModel.finally_success_time = String.valueOf(System.currentTimeMillis());
                     } else {
                         ipModel.rtt = String.valueOf(SpeedtestManager.MAX_OVERTIME_RTT);
-                        ipModel.err_num = String.valueOf((Integer.valueOf(ipModel.err_num) + 1));
+                        //算作链接失败一次
+                        ipModel.err_num = String.valueOf((Integer.parseInt(ipModel.err_num) + 1));
                         ipModel.finally_fail_time = String.valueOf(System.currentTimeMillis());
                     }
                 }
+                //交给排序模块重新排序
                 scoreManager.serverIpScore(domainModel);
+                //只更新数据库缓存模块ip的顺序
                 dnsCacheManager.setSpeedInfo(ipArray);
             }
         }
     }
+
 
     /**
      * 日志上报
@@ -405,20 +436,5 @@ public class DNSCache {
         }
     }
 
-    // ///////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * 网络环境发生变化 刷新缓存数据 暂时先不需要 预处理逻辑。 用户直接请求的时候会更新数据。 （会有一次走本地dns ，
-     * 后期优化这个方法，主动请求缓存的数据）
-     *
-     * @param networkInfo
-     */
-    public void onNetworkStatusChanged(NetworkInfo networkInfo) {
-        if (null != dnsCacheManager) {
-            dnsCacheManager.clearMemoryCache();
-        }
-    }
-
-    // ///////////////////////////////////////////////////////////////////////////////////
 
 }

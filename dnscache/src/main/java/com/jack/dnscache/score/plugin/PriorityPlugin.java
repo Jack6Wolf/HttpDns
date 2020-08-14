@@ -1,11 +1,17 @@
 package com.jack.dnscache.score.plugin;
 
-import java.util.ArrayList;
-
 import com.jack.dnscache.model.IpModel;
 import com.jack.dnscache.score.IPlugIn;
 import com.jack.dnscache.score.PlugInManager;
 
+import java.util.ArrayList;
+
+/**
+ * 结果导向为正
+ * 以最好那个ip为满分开始计算基准。
+ * 假如3个ip优先级分别为 1,2,3
+ * 则分数为： 10/3，20/3，10
+ */
 public class PriorityPlugin implements IPlugIn {
 
     @Override
@@ -25,7 +31,7 @@ public class PriorityPlugin implements IPlugIn {
         float bi = getWeight() / MAX_PRIORITY;
         // 计算得分
         for (IpModel temp : list) {
-            if (temp.priority == null || temp.priority.equals("")){
+            if (temp.priority == null || temp.priority.equals("")) {
                 continue;
             }
             float priority = Float.parseFloat(temp.priority);

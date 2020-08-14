@@ -1,16 +1,22 @@
 package com.jack.dnscache.score;
 
-import java.util.ArrayList;
-
 import com.jack.dnscache.model.DomainModel;
 import com.jack.dnscache.model.IpModel;
 
+import java.util.ArrayList;
+
 /**
- * Created by fenglei on 15/4/21.
+ * 排序接口
  */
 public interface IScore {
 
-    public String[] serverIpScore(DomainModel domainModel) ;
-    
-    public String[] ListToArr( ArrayList<IpModel> list) ; 
+    /**
+     * 通过排序插件计算ip得分
+     */
+    public String[] serverIpScore(DomainModel domainModel);
+
+    /**
+     * 拼接ip
+     */
+    public String[] ListToArr(ArrayList<IpModel> list);
 }

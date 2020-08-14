@@ -1,11 +1,14 @@
 package com.jack.dnscache.dnsp.impl;
 
-import java.net.InetAddress;
-
-import com.jack.dnscache.net.networktype.NetworkManager;
 import com.jack.dnscache.dnsp.IDnsProvider;
 import com.jack.dnscache.model.HttpDnsPack;
+import com.jack.dnscache.net.networktype.NetworkManager;
 
+import java.net.InetAddress;
+
+/**
+ * LocalDns的方式做Dns解析{@link InetAddress#getAllByName(String)}
+ */
 public class LocalDns implements IDnsProvider {
 
     @Override
@@ -19,6 +22,7 @@ public class LocalDns implements IDnsProvider {
             if (null != ipList && ipList.length > 0) {
                 HttpDnsPack dnsPack = new HttpDnsPack();
                 String IPArr[] = ipList;
+                //统一默认给60s ttl时间
                 String TTL = "60";
                 dnsPack.domain = domain;
                 dnsPack.device_ip = NetworkManager.Util.getLocalIpAddress();

@@ -9,9 +9,8 @@ import java.util.Comparator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * 测速类
- *
- * Created by fenglei on 15/4/22.
+ * 测速类，供SpeedTestPlugin插件使用
+ * <p>
  */
 public class SpeedtestManager implements ISpeedtest {
 
@@ -19,24 +18,26 @@ public class SpeedtestManager implements ISpeedtest {
      * 请求server过程中发生错误
      */
     public static final int OCUR_ERROR = -1;
-    
-    public static final int MAX_OVERTIME_RTT = 9999;
 
-    /**测速的轮询间隔*/
-    public static long time_interval = 1 * 60 * 1000;
+    /**
+     * 超时，无效的ip
+     */
+    public static final int MAX_OVERTIME_RTT = 0x9999;
+
+    /**
+     * 测速的轮询间隔
+     */
+    public static long time_interval = 60 * 1000;
 
     private CopyOnWriteArrayList<BaseSpeedTest> mSpeedTests = new CopyOnWriteArrayList<>();
 
     public SpeedtestManager() {
-        mSpeedTests.add(new Socket80Test());
-        mSpeedTests.add(new PingTest());
+        mSpeedTests.add(new Socket80Test());//访问HttpServer80端⼝口，建⽴立连接
+        mSpeedTests.add(new PingTest());//发送ICMP包，获取RTT值
     }
 
     /**
-     * 
-     * @param url
-     * @param host
-     * @return
+     * 测速，获取RTT耗时结果
      */
     @Override
     public int speedTest(String ip, String host) {

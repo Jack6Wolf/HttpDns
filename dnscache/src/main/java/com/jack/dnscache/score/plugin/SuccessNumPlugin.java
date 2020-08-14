@@ -1,11 +1,15 @@
 package com.jack.dnscache.score.plugin;
 
-import java.util.ArrayList;
-
 import com.jack.dnscache.model.IpModel;
 import com.jack.dnscache.score.IPlugIn;
 import com.jack.dnscache.score.PlugInManager;
 
+import java.util.ArrayList;
+
+/**
+ * 结果导向为正
+ * 计算原理和PriorityPlugin一样
+ */
 public class SuccessNumPlugin implements IPlugIn {
 
     @Override
@@ -25,7 +29,7 @@ public class SuccessNumPlugin implements IPlugIn {
         float bi = getWeight() / MAX_SUCCESSNUM;
         // 计算得分
         for (IpModel temp : list) {
-            if (temp.success_num == null || temp.success_num.equals("")){
+            if (temp.success_num == null || temp.success_num.equals("")) {
                 continue;
             }
             float successNum = Float.parseFloat(temp.success_num);

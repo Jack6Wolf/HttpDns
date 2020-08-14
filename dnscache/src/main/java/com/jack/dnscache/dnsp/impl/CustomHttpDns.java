@@ -1,24 +1,27 @@
 package com.jack.dnscache.dnsp.impl;
 
-import java.util.ArrayList;
-
 import android.text.TextUtils;
 
 import com.jack.dnscache.dnsp.DnsConfig;
 import com.jack.dnscache.dnsp.IDnsProvider;
-import com.jack.dnscache.dnsp.IJsonParser;
-import com.jack.dnscache.dnsp.IJsonParser.JavaJSON_SINAHTTPDNS;
+import com.jack.dnscache.dnsp.IJsonParser.JavaJSON_HTTPDNS;
 import com.jack.dnscache.model.HttpDnsPack;
 import com.jack.dnscache.net.ApacheHttpClientNetworkRequests;
 
-public class SinaHttpDns implements IDnsProvider{
+import java.util.ArrayList;
+
+/**
+ * 使用自定义httpdns服务器拉取ip
+ */
+public class CustomHttpDns implements IDnsProvider {
 
     private ApacheHttpClientNetworkRequests netWork;
-    private JavaJSON_SINAHTTPDNS jsonObj;
+    private JavaJSON_HTTPDNS jsonObj;
     private String usingServerApi = "";
-    public SinaHttpDns() {
+
+    public CustomHttpDns() {
         netWork = new ApacheHttpClientNetworkRequests();
-        jsonObj = new IJsonParser.JavaJSON_SINAHTTPDNS();
+        jsonObj = new JavaJSON_HTTPDNS();
     }
 
     @Override
@@ -26,8 +29,8 @@ public class SinaHttpDns implements IDnsProvider{
         String jsonDataStr = null;
         HttpDnsPack dnsPack = null;
         ArrayList<String> serverApis = new ArrayList<String>();
-        serverApis.addAll(DnsConfig.SINA_HTTPDNS_SERVER_API);
-        while (null == dnsPack && serverApis.size() > 0) {
+        serverApis.addAll(DnsConfig.HTTPDNS_SERVER_API);
+        while (serverApis.size() > 0) {
             try {
                 String api = "";
                 int index = serverApis.indexOf(usingServerApi);
@@ -36,23 +39,25 @@ public class SinaHttpDns implements IDnsProvider{
                 } else {
                     api = serverApis.remove(0);
                 }
-                String sina_httpdns_api_url = api + domain;
-                jsonDataStr = netWork.requests(sina_httpdns_api_url);
+                String httpdns_api_url = api + domain;
+                jsonDataStr = netWork.requests(httpdns_api_url);
                 dnsPack = jsonObj.JsonStrToObj(jsonDataStr);
                 usingServerApi = api;
+                if (dnsPack != null && dnsPack.dns != null && dnsPack.dns.length > 0)
+                    return dnsPack;
             } catch (Exception e) {
                 e.printStackTrace();
                 usingServerApi = "";
             }
         }
-        return dnsPack;
+        return null;
     }
 
     @Override
     public boolean isActivate() {
-        return DnsConfig.enableSinaHttpDns;
+        return DnsConfig.enableHttpDns;
     }
-    
+
 
     @Override
     public String getServerApi() {
@@ -60,9 +65,9 @@ public class SinaHttpDns implements IDnsProvider{
         if (!TextUtils.isEmpty(usingServerApi)) {
             serverApi = usingServerApi;
         } else {
-            boolean yes = DnsConfig.SINA_HTTPDNS_SERVER_API.size() > 0;
+            boolean yes = DnsConfig.HTTPDNS_SERVER_API.size() > 0;
             if (yes) {
-                serverApi = DnsConfig.SINA_HTTPDNS_SERVER_API.get(0);
+                serverApi = DnsConfig.HTTPDNS_SERVER_API.get(0);
             }
         }
         return serverApi;

@@ -13,8 +13,6 @@ import java.util.List;
 
 /**
  * 文件操作工具类
- *
- * @author xingyu10
  */
 public class FileUtil {
 

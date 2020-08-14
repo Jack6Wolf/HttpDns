@@ -1,16 +1,19 @@
 package com.jack.dnscache.dnsp.impl;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
-
 import com.jack.dnscache.DNSCacheConfig;
-import com.jack.dnscache.net.networktype.NetworkManager;
 import com.jack.dnscache.Tools;
 import com.jack.dnscache.dnsp.DnsConfig;
 import com.jack.dnscache.dnsp.IDnsProvider;
 import com.jack.dnscache.model.HttpDnsPack;
 import com.jack.dnscache.net.ApacheHttpClientNetworkRequests;
+import com.jack.dnscache.net.networktype.NetworkManager;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+
+/**
+ * 利用第三方dns服务器做dns解析
+ */
 public class HttpPodDns implements IDnsProvider {
 
     private ApacheHttpClientNetworkRequests netWork;
@@ -21,7 +24,7 @@ public class HttpPodDns implements IDnsProvider {
 
     @Override
     public HttpDnsPack requestDns(String domain) {
-        // 如果新浪自家的服务器没有拿到数据，或者数据有问题，则使用 dnspod 提供的接口获取数据
+        // 如果自家的服务器没有拿到数据，或者数据有问题，则使用 dnspod 提供的接口获取数据
         String jsonDataStr = null;
         HttpDnsPack dnsPack = null;
 
@@ -40,7 +43,7 @@ public class HttpPodDns implements IDnsProvider {
             dnsPack.rawResult = jsonDataStr;
             dnsPack.domain = domain;
             dnsPack.device_ip = NetworkManager.Util.getLocalIpAddress();
-            dnsPack.device_sp = NetworkManager.getInstance().getSPID() ; 
+            dnsPack.device_sp = NetworkManager.getInstance().getSPID();
 
             dnsPack.dns = new HttpDnsPack.IP[IPArr.length];
             for (int i = 0; i < IPArr.length; i++) {
@@ -58,6 +61,16 @@ public class HttpPodDns implements IDnsProvider {
     @Override
     public boolean isActivate() {
         return DnsConfig.enableDnsPod;
+    }
+
+    @Override
+    public String getServerApi() {
+        return DnsConfig.DNSPOD_SERVER_API;
+    }
+
+    @Override
+    public int getPriority() {
+        return 8;
     }
 
     static class DNSPodCipher {
@@ -153,24 +166,13 @@ public class HttpPodDns implements IDnsProvider {
 
         /**
          * Convert char to byte
-         * 
-         * @param c
-         *            char
+         *
+         * @param c char
          * @return byte
          */
         private static byte charToByte(char c) {
             return (byte) "0123456789ABCDEF".indexOf(c);
         }
 
-    }
-
-    @Override
-    public String getServerApi() {
-        return DnsConfig.DNSPOD_SERVER_API;
-    }
-
-    @Override
-    public int getPriority() {
-        return 8;
     }
 }

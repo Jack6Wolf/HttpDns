@@ -9,6 +9,9 @@ import android.os.Bundle;
 
 import java.io.File;
 
+/**
+ * 应用设备信息配置
+ */
 public class AppConfigUtil {
 
     private static Context mContext;

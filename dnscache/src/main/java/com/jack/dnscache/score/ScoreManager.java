@@ -23,12 +23,15 @@ public class ScoreManager implements IScore {
 
     private PlugInManager plugInManager = new PlugInManager();
 
+    /**
+     * 通过排序插件计算ip得分
+     */
     @Override
     public String[] serverIpScore(DomainModel domainModel) {
 
         String[] IpArr = null;
 
-        // 数据库中得数据，进行排序 , 当ipmodelSize 大于1个的时候在参与排序
+        // 缓存中得到数据，进行排序，当ipmodelSize 大于1个的时候在参与排序
         if (domainModel.ipModelArr.size() > 1) {
             if (IS_SORT) {
                 plugInManager.run(domainModel.ipModelArr);
@@ -37,12 +40,13 @@ public class ScoreManager implements IScore {
             }
         }
 
-        // 转换数据格式
+        //转换数据格式
         IpArr = ListToArr(domainModel.ipModelArr);
 
         return IpArr;
     }
 
+    @Override
     public String[] ListToArr(ArrayList<IpModel> list) {
         if (list == null || list.size() == 0) return null;
         String[] IpArr = new String[list.size()];

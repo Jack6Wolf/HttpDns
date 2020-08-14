@@ -1,11 +1,15 @@
 package com.jack.dnscache.score.plugin;
 
-import java.util.ArrayList;
-
 import com.jack.dnscache.model.IpModel;
 import com.jack.dnscache.score.IPlugIn;
 import com.jack.dnscache.score.PlugInManager;
 
+import java.util.ArrayList;
+
+/**
+ * 以24小时为阈值，最近成功时间超过24小时得分直接为0分
+ * 24小时内的。时间越近分数越高
+ */
 public class SuccessTimePlugin implements IPlugIn {
 
     @Override

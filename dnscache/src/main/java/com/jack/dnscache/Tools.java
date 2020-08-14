@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 public class Tools {
 
     /**
-     * 从 url 中截取 domain
+     * 从url中截取domain
      */
     public static String getHostName(String url) {
         if (url == null)
@@ -64,7 +64,7 @@ public class Tools {
 
 
     /**
-     * 转换url 主机头为ip地址
+     * 转换url主机头为ip地址
      *
      * @param url  原url
      * @param host 主机头
@@ -102,6 +102,9 @@ public class Tools {
         return getStringDateShort(Long.parseLong(time));
     }
 
+    /**
+     * 全局日志
+     */
     public static void log(String tag, String msg) {
         if (!DNSCacheConfig.DEBUG) return;
         Log.d(tag, msg);

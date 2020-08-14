@@ -2,17 +2,9 @@ package com.jack.dnscache.cache;
 
 
 /**
- * 项目名称: DNSCache <br>
- * 类名称: DBConstants <br>
- * 类描述: 数据库名、表明、列明 相关常量定义 <br>
- * 创建人: fenglei <br>
- * 创建时间: 2015-3-26 下午3:54:59 <br>
- * <p>
- * 修改人:  <br>
- * 修改时间:  <br>
- * 修改备注:  <br>
+ * 数据库名、表明、列明 相关常量定义
  *
- * @version V1.0
+ * @version 1.0
  */
 public interface DBConstants {
 

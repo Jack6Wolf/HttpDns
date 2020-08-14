@@ -16,21 +16,18 @@ import java.util.ArrayList;
  * 从httpdns查询域名相应A记录，缓存域名信息
  * 查询模块必须保证响应速度，基于已有设备测试平均在5毫秒左右
  *
- * @version V1.0
+ * @version 1.0
  */
 public class QueryManager implements IQuery {
 
     private IDnsCache dnsCache = null;
 
     public QueryManager(IDnsCache dnsCache) {
-
         this.dnsCache = dnsCache;
     }
 
     /**
      * 根据host名字查询server ip
-     *
-     * @return
      */
     @Override
     public DomainModel queryDomainIp(String sp, String host) {
@@ -38,11 +35,12 @@ public class QueryManager implements IQuery {
         // 从缓存中查询，如果为空 情况有两种 1：没有缓存数据 2：数据过期
         DomainModel domainModel = getCacheDomainIp(sp, host);
 
-        // 如果缓存是无效数据，则取local返回
+        // 如果缓存是无效数据，则取localdns返回
         if (inValidData(domainModel)) {
 
             String[] ipList = null;
             try {
+                // FIXME: 2020/8/14 最好移到工作线程执行
                 InetAddress[] addresses = InetAddress.getAllByName(host);
                 ipList = new String[addresses.length];
                 for (int i = 0; i < addresses.length; i++) {
@@ -77,9 +75,6 @@ public class QueryManager implements IQuery {
      * 2.domainModel.ipModelArr == null
      * 3.domainModel.ipModelArr.size() == 0
      * 4.domainModel.ipModelArr的rtt都是计算都出错，即都不通
-     *
-     * @param domainModel
-     * @return
      */
     private boolean inValidData(DomainModel domainModel) {
         if (domainModel == null || domainModel.ipModelArr == null || domainModel.ipModelArr.size() == 0) {
@@ -97,11 +92,8 @@ public class QueryManager implements IQuery {
 
     /**
      * 从缓存层获取获取数据
-     *
-     * @param sp
-     * @param host
-     * @return
      */
+    @Override
     public DomainModel getCacheDomainIp(String sp, String host) {
         return dnsCache.getDnsCache(sp, host);
     }

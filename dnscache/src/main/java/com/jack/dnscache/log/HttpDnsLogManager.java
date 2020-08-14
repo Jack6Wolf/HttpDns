@@ -104,7 +104,7 @@ public class HttpDnsLogManager implements IDnsLog {
     private void tryCreateLogFile() {
         if (FileUtil.haveFreeSpaceInSD()) {
             mLogFile = new File(AppConfigUtil.getExternalCacheDir(), "httpdns.log");
-            if (null != mLogFile && !mLogFile.exists()) {
+            if (!mLogFile.exists()) {
                 try {
                     mLogFile.createNewFile();
                 } catch (IOException e) {

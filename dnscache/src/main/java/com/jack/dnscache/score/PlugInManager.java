@@ -54,7 +54,7 @@ public class PlugInManager {
         if (list == null || list.size() == 0) {
             return;
         }
-        //恢复得分为0
+        //全部恢复得分为0（reset）
         for (IpModel temp : list) {
             if (null != temp) {
                 temp.grade = 0;
