@@ -347,7 +347,7 @@ public class DNSCacheConfig {
             //httpdns
             model.IS_MY_HTTP_SERVER = "0";
             model.HTTPDNS_SERVER_API.add("https://getman.cn/mock/v1/httpdns?host=");
-            //三方httppoddns
+            //三方httppoddns(腾讯的httpdns)
             model.IS_DNSPOD_SERVER = "0";
             model.DNSPOD_SERVER_API = "http://119.29.29.29/d?ttl=1&dn=";
             model.DNSPOD_ID = "";
@@ -502,6 +502,37 @@ public class DNSCacheConfig {
             buffer.append("]");
             buffer.append("}");
             return buffer.toString();
+        }
+
+
+        public static Data createMockConfig() {
+            Data model = new Data();
+            model.HTTPDNS_LOG_SAMPLE_RATE = "50";
+            model.HTTPDNS_SWITCH = "1";
+            model.SCHEDULE_LOG_INTERVAL = "3600000";
+            model.SCHEDULE_SPEED_INTERVAL = "60000";
+            model.SCHEDULE_TIMER_INTERVAL = "60000";
+            model.IP_OVERDUE_DELAY = "60";
+            //httpdns
+            model.IS_MY_HTTP_SERVER = "1";
+            model.HTTPDNS_SERVER_API.add("https://getman.cn/mock/v1/httpdns?host=");
+            //三方httppoddns
+            model.IS_DNSPOD_SERVER = "0";
+            model.DNSPOD_SERVER_API = "http://119.29.29.29/d?ttl=1&dn=";
+            model.DNSPOD_ID = "";
+            model.DNSPOD_KEY = "";
+            //udpdns
+            model.IS_UDPDNS_SERVER = "1";
+            model.UDPDNS_SERVER_API = "8.8.8.8";
+            //排序模块
+            model.IS_SORT = "1";
+            model.SPEEDTEST_PLUGIN_NUM = "40";
+            model.PRIORITY_PLUGIN_NUM = "30";
+            model.SUCCESSNUM_PLUGIN_NUM = "10";
+            model.ERRNUM_PLUGIN_NUM = "10";
+            model.SUCCESSTIME_PLUGIN_NUM = "10";
+
+            return model;
         }
     }
 }

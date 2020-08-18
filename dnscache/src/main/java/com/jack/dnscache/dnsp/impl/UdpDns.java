@@ -104,7 +104,7 @@ public class UdpDns implements IDnsProvider {
         }
 
         private static void encodeDNSMessage(DataOutputStream output, String domainName) throws IOException {
-            // transaction id
+            // transaction id（DNS 报文的 ID 标识。对于请求报文和其对应的应答报文，该字段的值是相同的。通过它可以区分 DNS 应答报文是对哪个请求进行响应的。）
             output.writeShort(1);
             // flags
             output.writeShort(0x100);

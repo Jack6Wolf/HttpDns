@@ -19,7 +19,7 @@ public class LocalDns implements IDnsProvider {
             for (int i = 0; i < addresses.length; i++) {
                 ipList[i] = addresses[i].getHostAddress();
             }
-            if (null != ipList && ipList.length > 0) {
+            if (ipList.length > 0) {
                 HttpDnsPack dnsPack = new HttpDnsPack();
                 String IPArr[] = ipList;
                 //统一默认给60s ttl时间

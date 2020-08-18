@@ -17,8 +17,8 @@ public class PingTest extends BaseSpeedTest {
     @Override
     public int speedTest(String ip, String host) {
         try {
-            //-c 1:ping的次数 -s 1：计数跃点的时间戳  -w 1：等待每次回复的超时时间
-            return Ping.runcmd("ping -c 1 " + ip);
+            //-c 1:ping的次数 -s 1：计数跃点的时间戳  -w 1：等待每次回复的超时时间(ms)
+            return Ping.runcmd("ping -c 1 -w 1000" + ip);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -27,7 +27,7 @@ public class PingTest extends BaseSpeedTest {
 
     @Override
     public int getPriority() {
-        return 0;
+        return 8;
     }
 
     @Override

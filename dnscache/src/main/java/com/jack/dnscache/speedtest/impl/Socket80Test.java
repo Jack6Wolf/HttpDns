@@ -42,7 +42,7 @@ public class Socket80Test extends BaseSpeedTest {
 
     @Override
     public int getPriority() {
-        return 10;
+        return 1;
     }
 
     @Override

@@ -29,8 +29,8 @@ public class DnsManager implements IDns {
 
     public DnsManager() {
         mDnsProviders.add(new CustomHttpDns()); //httpdns方式解析
-        mDnsProviders.add(new HttpPodDns()); //依赖第三方dns服务商解析
-        mDnsProviders.add(new UdpDns()); //udp方式去权威dns服务器解析
+        mDnsProviders.add(new HttpPodDns()); //依赖第三方智能dns服务商解析
+        mDnsProviders.add(new UdpDns()); //udp方式去本地dns服务器解析
         mDnsProviders.add(new LocalDns()); //采用原生方式解析
     }
 

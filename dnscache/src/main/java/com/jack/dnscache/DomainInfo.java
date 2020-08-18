@@ -17,6 +17,10 @@ public class DomainInfo {
      */
     public String url = null;
     /**
+     * A记录
+     */
+    public String ip = null;
+    /**
      * 需要设置到 http head 里面的主机头
      */
     public String host = "";
@@ -45,9 +49,10 @@ public class DomainInfo {
      * @param url
      * @param host
      */
-    public DomainInfo(String id, String url, String host) {
+    public DomainInfo(String id, String ip, String url, String host) {
 
         this.id = id;
+        this.ip = ip;
         this.url = url;
         this.host = host;
 
@@ -61,7 +66,7 @@ public class DomainInfo {
 
         url = Tools.getIpUrl(url, host, ip);
 
-        return new DomainInfo("", url, host);
+        return new DomainInfo("", ip, url, host);
     }
 
     /**

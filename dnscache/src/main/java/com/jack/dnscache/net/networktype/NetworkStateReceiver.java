@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.jack.dnscache.DNSCache;
 
@@ -44,6 +45,7 @@ public class NetworkStateReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
+        Log.d(TAG,"onNetworkStatusChanged");
         if (TextUtils.equals(action, ConnectivityManager.CONNECTIVITY_ACTION)) {
             NetworkInfo networkInfo = getActiveNetwork(context);
             if (networkInfo != null) {

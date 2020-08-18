@@ -204,12 +204,11 @@ public class DNSCache {
             //如果直接是ip的话直接处理返回
             if (!TextUtils.isEmpty(host) && Tools.isIPV4(host)) {
                 DomainInfo[] info = new DomainInfo[1];
-                info[0] = new DomainInfo("", url, "");
+                info[0] = new DomainInfo("", host, url, "");
                 return info;
             }
             // 根据sp 查询domain对应的server ip数组
-            final DomainModel domainModel = queryManager.queryDomainIp(String.valueOf(NetworkManager.getInstance().getSPID()), host);
-
+             DomainModel domainModel = queryManager.queryDomainIp(String.valueOf(NetworkManager.getInstance().getSPID()), host);
 
             // 如果本地cache 和 内置数据都没有 返回null，然后马上查询数据
             if (null == domainModel || domainModel.id == -1) {

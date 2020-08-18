@@ -4,6 +4,7 @@ import com.jack.dnscache.cache.IDnsCache;
 import com.jack.dnscache.model.DomainModel;
 import com.jack.dnscache.model.IpModel;
 import com.jack.dnscache.speedtest.SpeedtestManager;
+import com.jack.dnscache.thread.RealTimeThreadPool;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -31,42 +32,50 @@ public class QueryManager implements IQuery {
      */
     @Override
     public DomainModel queryDomainIp(String sp, String host) {
-
         // 从缓存中查询，如果为空 情况有两种 1：没有缓存数据 2：数据过期
         DomainModel domainModel = getCacheDomainIp(sp, host);
 
-        // 如果缓存是无效数据，则取localdns返回
+        // 如果缓存是无效数据，则进行异步localdns，返回null
         if (inValidData(domainModel)) {
-
-            String[] ipList = null;
-            try {
-                // FIXME: 2020/8/14 最好移到工作线程执行
-                InetAddress[] addresses = InetAddress.getAllByName(host);
-                ipList = new String[addresses.length];
-                for (int i = 0; i < addresses.length; i++) {
-                    ipList[i] = addresses[i].getHostAddress();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            if (null != ipList) {
-                domainModel = new DomainModel();
-                domainModel.id = -1;
-                domainModel.domain = host;
-                domainModel.sp = sp;
-                domainModel.ttl = "60";
-                domainModel.time = String.valueOf(System.currentTimeMillis());
-                domainModel.ipModelArr = new ArrayList<IpModel>();
-                for (int i = 0; i < ipList.length; i++) {
-                    domainModel.ipModelArr.add(new IpModel());
-                    domainModel.ipModelArr.get(i).ip = ipList[i];
-                    domainModel.ipModelArr.get(i).sp = sp;
-                }
-                dnsCache.addMemoryCache(host, domainModel);
-            }
+            RealTimeThreadPool.getInstance().execute(new LocalDnsTask(sp, host));
+            return null;
+        } else {
+            return domainModel;
         }
-        return domainModel;
+    }
+
+    /**
+     * localdns 操作
+     */
+    private void localDnsTask(String sp, String host) {
+        DomainModel domainModel;
+        String[] ipList = null;
+        try {
+            InetAddress[] addresses = InetAddress.getAllByName(host);
+            ipList = new String[addresses.length];
+            for (int i = 0; i < addresses.length; i++) {
+                ipList[i] = addresses[i].getHostAddress();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (null != ipList) {
+            domainModel = new DomainModel();
+            domainModel.id = -1;
+            domainModel.domain = host;
+            domainModel.sp = sp;
+            domainModel.ttl = "60";
+            domainModel.time = String.valueOf(System.currentTimeMillis());
+            domainModel.ipModelArr = new ArrayList<IpModel>();
+            for (int i = 0; i < ipList.length; i++) {
+                domainModel.ipModelArr.add(new IpModel());
+                domainModel.ipModelArr.get(i).ip = ipList[i];
+                domainModel.ipModelArr.get(i).sp = sp;
+            }
+            //先添加进缓存
+            dnsCache.addMemoryCache(host, domainModel);
+        }
     }
 
     /**
@@ -96,5 +105,23 @@ public class QueryManager implements IQuery {
     @Override
     public DomainModel getCacheDomainIp(String sp, String host) {
         return dnsCache.getDnsCache(sp, host);
+    }
+
+    /**
+     * localdns task
+     */
+    private class LocalDnsTask implements Runnable {
+        private String sp;
+        private String host;
+
+        private LocalDnsTask(String sp, String host) {
+            this.sp = sp;
+            this.host = host;
+        }
+
+        @Override
+        public void run() {
+            localDnsTask(sp, host);
+        }
     }
 }
