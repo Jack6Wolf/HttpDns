@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 
 import com.jack.dnscache.Tools;
 
@@ -310,6 +311,16 @@ public class NetworkManager extends Constants {
             @SuppressLint("WifiManagerPotentialLeak") WifiManager wifiMgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
             WifiInfo info = wifiMgr.getConnectionInfo();
             String wifiId = info != null ? info.getSSID() : null;
+            //换另一种方式，兼容8.0
+            if (TextUtils.isEmpty(wifiId) || "<unknown ssid>".equals(wifiId)) {
+                ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                if (cm != null) {
+                    NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+                    if (info != null && networkInfo.isConnected()) {
+                        wifiId = networkInfo.getExtraInfo();
+                    }
+                }
+            }
             return wifiId;
         }
 
