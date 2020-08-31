@@ -8,6 +8,7 @@ import com.jack.dnscache.cache.DnsCacheManager;
 import com.jack.dnscache.cache.IDnsCache;
 import com.jack.dnscache.dnsp.DnsManager;
 import com.jack.dnscache.dnsp.IDns;
+import com.jack.dnscache.dnsp.IDnsProvider;
 import com.jack.dnscache.log.HttpDnsLogManager;
 import com.jack.dnscache.model.DomainModel;
 import com.jack.dnscache.model.HttpDnsPack;
@@ -26,6 +27,7 @@ import com.jack.dnscache.thread.RealTimeThreadPool;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -193,7 +195,8 @@ public class DNSCache {
     // ///////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * 获取 HttpDNS信息
+     * 获取 HttpDNS信息,异步解析
+     * 若接口返回null，为避免影响业务请降级到local dns解析策略。
      *
      * @param url 传入的Url
      * @return 返回排序后的可直接使用接口
@@ -204,11 +207,11 @@ public class DNSCache {
             //如果直接是ip的话直接处理返回
             if (!TextUtils.isEmpty(host) && Tools.isIPV4(host)) {
                 DomainInfo[] info = new DomainInfo[1];
-                info[0] = new DomainInfo("", host, url, "");
+                info[0] = new DomainInfo("", host, url, "", IDnsProvider.ORIGINAL);
                 return info;
             }
             // 根据sp 查询domain对应的server ip数组
-             DomainModel domainModel = queryManager.queryDomainIp(String.valueOf(NetworkManager.getInstance().getSPID()), host);
+            DomainModel domainModel = queryManager.queryDomainIp(String.valueOf(NetworkManager.getInstance().getSPID()), host);
 
             // 如果本地cache 和 内置数据都没有 返回null，然后马上查询数据
             if (null == domainModel || domainModel.id == -1) {
@@ -222,13 +225,14 @@ public class DNSCache {
             //过滤一下无效ip
             ArrayList<IpModel> result = filterInvalidIp(domainModel.ipModelArr);
             String[] scoreIpArray = scoreManager.ListToArr(result);
+            int[] sourceIpArray = scoreManager.ListToInt(result);
 
             if (scoreIpArray == null || scoreIpArray.length == 0) {
                 return null; // 转换错误 终端后续流程
             }
 
             // 转换成需要返回的数据模型
-            DomainInfo[] domainInfoList = DomainInfo.DomainInfoFactory(scoreIpArray, url, host);
+            DomainInfo[] domainInfoList = DomainInfo.DomainInfoFactory(scoreIpArray, url, host, sourceIpArray);
 
             return domainInfoList;
         } else {
@@ -386,7 +390,10 @@ public class DNSCache {
                     //单个ip不用排序了
                     continue;
                 }
-                for (IpModel ipModel : ipArray) {
+                //使用迭代器避免出现ConcurrentModificationException
+                Iterator<IpModel> iterator = ipArray.iterator();
+                while (iterator.hasNext()) {
+                    IpModel ipModel = iterator.next();
                     //根据测速模块的
                     int rtt = speedtestManager.speedTest(ipModel.ip, domainModel.domain);
                     boolean succ = rtt > SpeedtestManager.OCUR_ERROR;

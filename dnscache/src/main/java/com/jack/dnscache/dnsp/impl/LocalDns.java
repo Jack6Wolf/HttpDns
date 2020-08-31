@@ -41,6 +41,7 @@ public class LocalDns implements IDnsProvider {
                     dnsPack.dns[i].ip = ip;
                     dnsPack.dns[i].ttl = TTL;
                     dnsPack.dns[i].priority = "0";
+                    dnsPack.dns[i].source = IDnsProvider.LOCALDNS;
                 }
                 return dnsPack;
             }

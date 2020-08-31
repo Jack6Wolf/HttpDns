@@ -57,5 +57,14 @@ public class ScoreManager implements IScore {
         return IpArr;
     }
 
-
+    @Override
+    public int[] ListToInt(ArrayList<IpModel> list) {
+        if (list == null || list.size() == 0) return null;
+        int[] sourceArr = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i) == null) continue;
+            sourceArr[i] = list.get(i).source;
+        }
+        return sourceArr;
+    }
 }

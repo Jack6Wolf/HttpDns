@@ -11,6 +11,11 @@ import com.jack.dnscache.model.HttpDnsPack;
  * @see com.jack.dnscache.dnsp.impl.UdpDns
  */
 public interface IDnsProvider {
+    public static final int CUSTOMHTTPDNS = 1;
+    public static final int HTTPPODDNS = 2;
+    public static final int UDPDNS = 3;
+    public static final int LOCALDNS = 4;
+    public static final int ORIGINAL = -1;
 
     /**
      * 请求dns server，返回指定的域名解析信息

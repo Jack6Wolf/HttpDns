@@ -51,6 +51,7 @@ public class HttpPodDns implements IDnsProvider {
                 dnsPack.dns[i].ip = IPArr[i];
                 dnsPack.dns[i].ttl = TTL;
                 dnsPack.dns[i].priority = "0";
+                dnsPack.dns[i].source = IDnsProvider.HTTPPODDNS;
             }
         } catch (Exception e) {
             dnsPack = null;

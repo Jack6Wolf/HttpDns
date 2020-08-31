@@ -16,6 +16,6 @@ public class App extends Application {
         DNSCache.Init(this);
         DNSCacheConfig.Data aDefault = DNSCacheConfig.Data.createMockConfig();
         DNSCacheConfig.saveLocalConfigAndSync(this, aDefault);
-        DNSCache.getInstance().preLoadDomains(new String[]{"upms.startimestv.com"});
+        DNSCache.getInstance().preLoadDomains(new String[]{"www.baidu.com","upms.startimestv.com"});
     }
 }

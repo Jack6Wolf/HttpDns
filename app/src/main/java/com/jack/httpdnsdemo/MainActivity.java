@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
                 while (true) {
                     getIp();
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(2000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             InetAddress[] allByName = InetAddress.getAllByName("www.baidu.com");
             for (InetAddress inetAddress : allByName) {
-                Log.e(TAG,inetAddress.getHostAddress());
+                Log.e(TAG, inetAddress.getHostAddress());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,10 +54,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getIp() {
-        DomainInfo[] infoList = DNSCache.getInstance().getDomainServerIp("http://www.baidu.com/ums/v4/user/login");
+        DomainInfo[] infoList = DNSCache.getInstance().getDomainServerIp("http://upms.startimestv.com/ums/v4/user/login");
         if (infoList != null) {
             for (DomainInfo domainInfo : infoList) {
-                Log.e("MainActivity", domainInfo.ip);
+                Log.e("MainActivity", domainInfo.ip + "source:" + domainInfo.source);
             }
         }
     }

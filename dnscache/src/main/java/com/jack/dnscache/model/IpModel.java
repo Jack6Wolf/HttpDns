@@ -62,7 +62,7 @@ public class IpModel {
     /**
      * 访问ip服务器的往返时延
      *
-     * 该字段映射类 {@link DBConstants#IP_COLUMN_PRIORITY }}字段 <br>
+     * 该字段映射类 {@link DBConstants#IP_COLUMN_RTT }}字段 <br>
      */
     public String rtt = "0";
     /**
@@ -94,6 +94,12 @@ public class IpModel {
      */
     public float grade = 0;
 
+    /**
+     * ip来源
+     * 该字段映射类 {@link DBConstants#IP_COLUMN_SOURCE }字段 <br>
+     */
+    public int source;
+
 
     public IpModel() {
     }
@@ -110,6 +116,7 @@ public class IpModel {
         str += "-- 运营商 = " + sp + "\n";
         str += "-- 过期时间 = " + ttl + "\n";
         str += "-- 优先级 = " + priority + "\n";
+        str += "-- 来源 = " + source + "\n";
         str += "-- 访问ip服务器的往返时延 = " + rtt + "\n";
         str += "-- 历史成功次数 = " + success_num + "\n";
         str += "-- 历史错误次数 = " + err_num + "\n";
@@ -131,6 +138,7 @@ public class IpModel {
                     .key("port").value(port)//
                     .key("ttl").value(ttl)//
                     .key("priority").value(priority)//
+                    .key("source").value(source)//
                     .key("success_num").value(success_num)//
                     .key("err_num").value(err_num)//
                     .key("finally_success_time").value(finally_success_time)//

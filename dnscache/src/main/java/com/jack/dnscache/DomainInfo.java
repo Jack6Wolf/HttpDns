@@ -41,6 +41,15 @@ public class DomainInfo {
      */
     public String code = null;
 
+    /**
+     * A记录来源，通过的途径
+     * {@link com.jack.dnscache.dnsp.IDnsProvider#CUSTOMHTTPDNS}
+     * {@link com.jack.dnscache.dnsp.IDnsProvider#HTTPPODDNS}
+     * {@link com.jack.dnscache.dnsp.IDnsProvider#UDPDNS}
+     * {@link com.jack.dnscache.dnsp.IDnsProvider#LOCALDNS}
+     */
+    public int source;
+
 
     /**
      * 构造函数
@@ -49,36 +58,36 @@ public class DomainInfo {
      * @param url
      * @param host
      */
-    public DomainInfo(String id, String ip, String url, String host) {
+    public DomainInfo(String id, String ip, String url, String host,int source) {
 
         this.id = id;
         this.ip = ip;
         this.url = url;
         this.host = host;
-
+        this.source = source;
         this.startTime = String.valueOf(System.currentTimeMillis());
     }
 
     /**
      * 工场方法
      */
-    public static DomainInfo DomainInfoFactory(String ip, String url, String host) {
+    public static DomainInfo DomainInfoFactory(String ip, String url, String host,int source) {
 
         url = Tools.getIpUrl(url, host, ip);
 
-        return new DomainInfo("", ip, url, host);
+        return new DomainInfo("", ip, url, host,source);
     }
 
     /**
      * 工场方法
      */
-    public static DomainInfo[] DomainInfoFactory(String[] serverIpArray, String url, String host) {
+    public static DomainInfo[] DomainInfoFactory(String[] serverIpArray, String url, String host,int[] sources) {
 
         DomainInfo[] domainArr = new DomainInfo[serverIpArray.length];
 
         for (int i = 0; i < serverIpArray.length; i++) {
 
-            domainArr[i] = DomainInfoFactory(serverIpArray[i], url, host);
+            domainArr[i] = DomainInfoFactory(serverIpArray[i], url, host,sources[i]);
         }
 
         return domainArr;
@@ -94,6 +103,8 @@ public class DomainInfo {
         str += "id = " + id + "\n";
         str += "url = " + url + "\n";
         str += "host = " + host + "\n";
+        str += "source = " + source + "\n";
+        str += "ip = " + ip + "\n";
         str += "data = " + data + "\n";
         str += "startTime = " + startTime + "\n";
         str += "stopTime = " + stopTime + "\n";

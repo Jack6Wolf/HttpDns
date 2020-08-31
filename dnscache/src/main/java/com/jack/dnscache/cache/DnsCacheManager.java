@@ -110,6 +110,7 @@ public class DnsCacheManager extends DNSCacheDatabaseHelper implements IDnsCache
             ipModel.ip = temp.ip;
             ipModel.ttl = temp.ttl;
             ipModel.priority = temp.priority;
+            ipModel.source = temp.source;
 
             ipModel.port = 80;
             ipModel.sp = domainModel.sp;

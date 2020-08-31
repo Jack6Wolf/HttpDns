@@ -19,4 +19,7 @@ public interface IScore {
      * 拼接ip
      */
     public String[] ListToArr(ArrayList<IpModel> list);
+
+
+    public int[] ListToInt(ArrayList<IpModel> list);
 }

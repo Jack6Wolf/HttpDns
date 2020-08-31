@@ -37,6 +37,7 @@ public interface IJsonParser {
                 dnsPack.dns[i].ip = tempJsonObj.getString("ip");
                 dnsPack.dns[i].ttl = tempJsonObj.getString("ttl");
                 dnsPack.dns[i].priority = tempJsonObj.getString("priority");
+                dnsPack.dns[i].source = IDnsProvider.CUSTOMHTTPDNS;
             }
             return dnsPack;
         }

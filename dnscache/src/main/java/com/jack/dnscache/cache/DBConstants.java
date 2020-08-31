@@ -83,6 +83,7 @@ public interface DBConstants {
      * ip服务器优先级-排序算法策略使用
      */
     public static final String IP_COLUMN_PRIORITY = "priority";
+    public static final String IP_COLUMN_SOURCE = "source";
     /**
      * ip服务器访问延时时间(可用ping或http发送空包实现)。单位ms
      */
@@ -171,6 +172,7 @@ public interface DBConstants {
                     IP_COLUMN_SP + " TEXT," +
                     IP_COLUMN_TTL + " TEXT," +
                     IP_COLUMN_PRIORITY + " INTEGER," +
+                    IP_COLUMN_SOURCE + " INTEGER," +
                     IP_COLUMN_RTT + " INTEGER," +
                     IP_COLUMN_SUCCESS_NUM + " INTEGER," +
                     IP_COLUMN_ERR_NUM + " INTEGER," +

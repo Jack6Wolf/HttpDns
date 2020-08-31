@@ -135,6 +135,7 @@ public class HttpDnsPack {
          * 服务器推荐使用的A记录 级别从0-10
          */
         public String priority = "";
+        public int source;
 
 
         /**
@@ -146,6 +147,7 @@ public class HttpDnsPack {
             str += "ip:" + ip + "\n";
             str += "ttl:" + ttl + "\n";
             str += "priority:" + priority + "\n";
+            str += "source:" + source + "\n";
             return str;
         }
 
@@ -156,6 +158,7 @@ public class HttpDnsPack {
                         .key("ip").value(ip)//
                         .key("ttl").value(ttl)//
                         .key("priority").value(priority)//
+                        .key("source").value(source)//
                         .endObject();
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -515,7 +515,7 @@ public class DNSCacheConfig {
             model.IP_OVERDUE_DELAY = "60";
             //httpdns
             model.IS_MY_HTTP_SERVER = "1";
-            model.HTTPDNS_SERVER_API.add("https://getman.cn/mock/v1/httpdns?host=");
+            model.HTTPDNS_SERVER_API.add("https://getman.cn/mock/mock/v1/httpdns?host=");
             //三方httppoddns
             model.IS_DNSPOD_SERVER = "0";
             model.DNSPOD_SERVER_API = "http://119.29.29.29/d?ttl=1&dn=";

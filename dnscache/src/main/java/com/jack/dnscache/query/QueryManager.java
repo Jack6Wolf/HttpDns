@@ -1,6 +1,7 @@
 package com.jack.dnscache.query;
 
 import com.jack.dnscache.cache.IDnsCache;
+import com.jack.dnscache.dnsp.IDnsProvider;
 import com.jack.dnscache.model.DomainModel;
 import com.jack.dnscache.model.IpModel;
 import com.jack.dnscache.speedtest.SpeedtestManager;
@@ -72,6 +73,7 @@ public class QueryManager implements IQuery {
                 domainModel.ipModelArr.add(new IpModel());
                 domainModel.ipModelArr.get(i).ip = ipList[i];
                 domainModel.ipModelArr.get(i).sp = sp;
+                domainModel.ipModelArr.get(i).source = IDnsProvider.LOCALDNS;
             }
             //先添加进缓存
             dnsCache.addMemoryCache(host, domainModel);
