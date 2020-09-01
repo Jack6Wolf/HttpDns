@@ -47,7 +47,7 @@ public class DNSCache {
     /**
      * 定时器任务轮询间隔
      */
-    public static int timer_interval = 60 * 1000;
+    public static int timer_interval = 180 * 1000;
     private static DNSCache Instance = null;
     private static Context sContext;
     private static Object lock = new Object();

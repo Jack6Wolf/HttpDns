@@ -2,6 +2,7 @@ package com.jack.dnscache.query;
 
 import com.jack.dnscache.cache.IDnsCache;
 import com.jack.dnscache.dnsp.IDnsProvider;
+import com.jack.dnscache.dnsp.impl.LocalDns;
 import com.jack.dnscache.model.DomainModel;
 import com.jack.dnscache.model.IpModel;
 import com.jack.dnscache.speedtest.SpeedtestManager;
@@ -66,7 +67,7 @@ public class QueryManager implements IQuery {
             domainModel.id = -1;
             domainModel.domain = host;
             domainModel.sp = sp;
-            domainModel.ttl = "60";
+            domainModel.ttl = LocalDns.TTL_DEFAULT;
             domainModel.time = String.valueOf(System.currentTimeMillis());
             domainModel.ipModelArr = new ArrayList<IpModel>();
             for (int i = 0; i < ipList.length; i++) {

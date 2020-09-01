@@ -26,7 +26,7 @@ public class DnsCacheManager extends DNSCacheDatabaseHelper implements IDnsCache
     /**
      * 延迟差值，单位s
      */
-    public static int ip_overdue_delay = 20;
+    public static int ip_overdue_delay = 10;
     /**
      * 缓存初始容量值
      */
@@ -39,6 +39,8 @@ public class DnsCacheManager extends DNSCacheDatabaseHelper implements IDnsCache
      * 数据库操作类
      */
     private DNSCacheDatabaseHelper db = null;
+
+    private static final int DOMAIN_TTL=180;
     /**
      * 缓存链表
      */
@@ -103,7 +105,7 @@ public class DnsCacheManager extends DNSCacheDatabaseHelper implements IDnsCache
 
         domainModel.ipModelArr = new ArrayList<IpModel>();
 
-        int domainTTL = 60;
+        int domainTTL = DOMAIN_TTL;
         for (HttpDnsPack.IP temp : dnsPack.dns) {
 
             IpModel ipModel = new IpModel();
@@ -117,7 +119,7 @@ public class DnsCacheManager extends DNSCacheDatabaseHelper implements IDnsCache
 
             domainModel.ipModelArr.add(ipModel);
             //ip的ttl时间赋值给domain TTL
-            domainTTL = Math.min(domainTTL, Integer.valueOf(ipModel.ttl));
+            domainTTL = Math.min(domainTTL, Integer.parseInt(ipModel.ttl));
 
         }
         //就是ip的ttl时间

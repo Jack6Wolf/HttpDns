@@ -260,7 +260,7 @@ public class DNSCacheConfig {
          */
         public String HTTPDNS_SWITCH = "";
         /**
-         * 测速间隔时间 默认60s
+         * 测速间隔时间 默认180s
          */
         public String SCHEDULE_SPEED_INTERVAL = "";
         /**
@@ -268,11 +268,11 @@ public class DNSCacheConfig {
          */
         public String SCHEDULE_LOG_INTERVAL = "";
         /**
-         * timer轮询器的间隔时间 默认60s
+         * timer轮询器的间隔时间 默认180s
          */
         public String SCHEDULE_TIMER_INTERVAL = "";
         /**
-         * ip数据过期延迟差值 默认60s
+         * ip数据过期延迟差值 默认10s
          */
         public String IP_OVERDUE_DELAY = "";
         /**
@@ -341,9 +341,9 @@ public class DNSCacheConfig {
             model.HTTPDNS_LOG_SAMPLE_RATE = "50";
             model.HTTPDNS_SWITCH = "1";
             model.SCHEDULE_LOG_INTERVAL = "3600000";
-            model.SCHEDULE_SPEED_INTERVAL = "60000";
-            model.SCHEDULE_TIMER_INTERVAL = "60000";
-            model.IP_OVERDUE_DELAY = "60";
+            model.SCHEDULE_SPEED_INTERVAL = "180000";
+            model.SCHEDULE_TIMER_INTERVAL = "180000";
+            model.IP_OVERDUE_DELAY = "10";
             //httpdns
             model.IS_MY_HTTP_SERVER = "0";
             model.HTTPDNS_SERVER_API.add("https://getman.cn/mock/v1/httpdns?host=");
@@ -510,9 +510,9 @@ public class DNSCacheConfig {
             model.HTTPDNS_LOG_SAMPLE_RATE = "50";
             model.HTTPDNS_SWITCH = "1";
             model.SCHEDULE_LOG_INTERVAL = "3600000";
-            model.SCHEDULE_SPEED_INTERVAL = "60000";
-            model.SCHEDULE_TIMER_INTERVAL = "60000";
-            model.IP_OVERDUE_DELAY = "60";
+            model.SCHEDULE_SPEED_INTERVAL = "180000";
+            model.SCHEDULE_TIMER_INTERVAL = "180000";
+            model.IP_OVERDUE_DELAY = "10";
             //httpdns
             model.IS_MY_HTTP_SERVER = "1";
             model.HTTPDNS_SERVER_API.add("https://getman.cn/mock/mock/v1/httpdns?host=");

@@ -27,7 +27,7 @@ public class SpeedtestManager implements ISpeedtest {
     /**
      * 测速的轮询间隔
      */
-    public static long time_interval = 60 * 1000;
+    public static long time_interval = 180 * 1000;
 
     private CopyOnWriteArrayList<BaseSpeedTest> mSpeedTests = new CopyOnWriteArrayList<>();
 

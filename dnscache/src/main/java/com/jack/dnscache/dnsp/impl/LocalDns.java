@@ -10,6 +10,7 @@ import java.net.InetAddress;
  * LocalDns的方式做Dns解析{@link InetAddress#getAllByName(String)}
  */
 public class LocalDns implements IDnsProvider {
+    public static final String TTL_DEFAULT = "180";
 
     @Override
     public HttpDnsPack requestDns(String domain) {
@@ -22,11 +23,11 @@ public class LocalDns implements IDnsProvider {
             if (ipList.length > 0) {
                 HttpDnsPack dnsPack = new HttpDnsPack();
                 String IPArr[] = ipList;
-                //统一默认给60s ttl时间
-                String TTL = "60";
+                //统一默认给180s ttl时间
+                String TTL = TTL_DEFAULT;
                 dnsPack.domain = domain;
                 dnsPack.device_ip = NetworkManager.Util.getLocalIpAddress();
-                dnsPack.device_sp = NetworkManager.getInstance().getSPID() ;
+                dnsPack.device_sp = NetworkManager.getInstance().getSPID();
                 dnsPack.rawResult = "domain:" + domain + ";\nipArray:";
                 dnsPack.dns = new HttpDnsPack.IP[IPArr.length];
                 for (int i = 0; i < IPArr.length; i++) {
