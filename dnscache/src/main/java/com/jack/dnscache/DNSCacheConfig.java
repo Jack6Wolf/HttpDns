@@ -148,7 +148,7 @@ public class DNSCacheConfig {
                 try {
                     INetworkRequests netWork = new ApacheHttpClientNetworkRequests();
                     String url = ConfigText_API + "?k=" + AppConfigUtil.getAppKey() + "&v=" + AppConfigUtil.getVersionName();
-                    String responseStr = netWork.requests(url);
+                    String responseStr = netWork.requests(url,INetworkRequests.METHOD_GET);
 //                    responseStr = createMockJsonStr();
                     Data data = Data.fromJson(responseStr);
                     if (null != data) {
@@ -517,7 +517,7 @@ public class DNSCacheConfig {
             model.IS_MY_HTTP_SERVER = "1";
             model.HTTPDNS_SERVER_API.add("https://getman.cn/mock/mock/v1/httpdns?host=");
             //三方httppoddns
-            model.IS_DNSPOD_SERVER = "0";
+            model.IS_DNSPOD_SERVER = "1";
             model.DNSPOD_SERVER_API = "http://119.29.29.29/d?ttl=1&dn=";
             model.DNSPOD_ID = "";
             model.DNSPOD_KEY = "";

@@ -6,6 +6,7 @@ import com.jack.dnscache.dnsp.DnsConfig;
 import com.jack.dnscache.dnsp.IDnsProvider;
 import com.jack.dnscache.model.HttpDnsPack;
 import com.jack.dnscache.net.ApacheHttpClientNetworkRequests;
+import com.jack.dnscache.net.INetworkRequests;
 import com.jack.dnscache.net.networktype.NetworkManager;
 
 import javax.crypto.Cipher;
@@ -27,13 +28,15 @@ public class HttpPodDns implements IDnsProvider {
         // 如果自家的服务器没有拿到数据，或者数据有问题，则使用 dnspod 提供的接口获取数据
         String jsonDataStr = null;
         HttpDnsPack dnsPack = null;
-
-        String dnspod_httpdns_api_url = DnsConfig.DNSPOD_SERVER_API + DNSPodCipher.Encryption(domain);
-        jsonDataStr = netWork.requests(dnspod_httpdns_api_url);
+        //暂时接入免费版
+        //String dnspod_httpdns_api_url = DnsConfig.DNSPOD_SERVER_API + DNSPodCipher.Encryption(domain);
+        String dnspod_httpdns_api_url = DnsConfig.DNSPOD_SERVER_API + domain+"&ip="+NetworkManager.Util.getLocalIpAddress();
+        jsonDataStr = netWork.requests(dnspod_httpdns_api_url, INetworkRequests.METHOD_GET);
         if (jsonDataStr == null || jsonDataStr.equals(""))
             return null; // 如果dnspod 也没提取到数据 则返回空
 
-        jsonDataStr = DNSPodCipher.Decryption(jsonDataStr);
+        //暂时接入免费版
+        //jsonDataStr = DNSPodCipher.Decryption(jsonDataStr);
 
         dnsPack = new HttpDnsPack();
         try {

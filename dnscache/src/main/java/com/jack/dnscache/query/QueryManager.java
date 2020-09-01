@@ -39,6 +39,7 @@ public class QueryManager implements IQuery {
 
         // 如果缓存是无效数据，则进行异步localdns，返回null
         if (inValidData(domainModel)) {
+            //增加A记录缓存命中率
             RealTimeThreadPool.getInstance().execute(new LocalDnsTask(sp, host));
             return null;
         } else {

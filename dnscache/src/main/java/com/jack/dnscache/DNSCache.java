@@ -385,9 +385,12 @@ public class DNSCache {
 
         private void updateSpeedInfo(ArrayList<DomainModel> list) {
             for (DomainModel domainModel : list) {
-                ArrayList<IpModel> ipArray = domainModel.ipModelArr;
+                //深拷贝
+                ArrayList<IpModel> ipArray = null;
+                if (domainModel.ipModelArr != null && domainModel.ipModelArr.size() > 0)
+                    ipArray = new ArrayList<>(domainModel.ipModelArr);
+//                ArrayList<IpModel> ipArray = domainModel.ipModelArr;
                 if (ipArray == null || ipArray.size() < 1) {
-                    //单个ip不用排序了
                     continue;
                 }
                 //使用迭代器避免出现ConcurrentModificationException
@@ -409,6 +412,8 @@ public class DNSCache {
                         ipModel.finally_fail_time = String.valueOf(System.currentTimeMillis());
                     }
                 }
+                //解决并发问题
+                domainModel.ipModelArr = ipArray;
                 //交给排序模块重新排序
                 scoreManager.serverIpScore(domainModel);
                 //只更新数据库缓存模块ip的顺序

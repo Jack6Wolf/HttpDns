@@ -111,7 +111,8 @@ public class DNSCacheDatabaseHelper extends SQLiteOpenHelper implements DBConsta
                         ipModel.d_id = model.id;
                         ipModel.id = addIpModel(ipModel);
                     } else {
-                        ipModel = oldModel;
+                        //直接更新
+                        ipModel = temp;
                         ipModel.d_id = model.id;
                         // 若数据库中存在此条数据，则更新对应的domain_Id即可
                         updateIpInfo(ipModel);

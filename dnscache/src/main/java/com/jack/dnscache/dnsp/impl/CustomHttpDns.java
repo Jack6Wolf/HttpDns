@@ -7,6 +7,7 @@ import com.jack.dnscache.dnsp.IDnsProvider;
 import com.jack.dnscache.dnsp.IJsonParser.JavaJSON_HTTPDNS;
 import com.jack.dnscache.model.HttpDnsPack;
 import com.jack.dnscache.net.ApacheHttpClientNetworkRequests;
+import com.jack.dnscache.net.INetworkRequests;
 
 import java.util.ArrayList;
 
@@ -40,7 +41,7 @@ public class CustomHttpDns implements IDnsProvider {
                     api = serverApis.remove(0);
                 }
                 String httpdns_api_url = api + domain;
-                jsonDataStr = netWork.requests(httpdns_api_url);
+                jsonDataStr = netWork.requests(httpdns_api_url, INetworkRequests.METHOD_GET);
                 dnsPack = jsonObj.JsonStrToObj(jsonDataStr);
                 usingServerApi = api;
                 if (dnsPack != null && dnsPack.dns != null && dnsPack.dns.length > 0)

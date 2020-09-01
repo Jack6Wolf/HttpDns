@@ -76,7 +76,7 @@ public class ApacheHttpClientNetworkRequests implements INetworkRequests {
             /**
              * 设置关键值
              */
-            con.setRequestMethod("POST"); // 以Post方式提交表单，默认get方式
+            con.setRequestMethod(METHOD_POST); // 以Post方式提交表单，默认get方式
             con.setDoInput(true);
             con.setDoOutput(true);
             con.setUseCaches(false); // post方式不能使用缓存
@@ -131,12 +131,12 @@ public class ApacheHttpClientNetworkRequests implements INetworkRequests {
     }
 
     @Override
-    public String requests(String url) {
-        return requests(url, "");
+    public String requests(String url, String method) {
+        return requests(url, "", method);
     }
 
     @Override
-    public String requests(String url, String host) {
+    public String requests(String url, String host, String method) {
         HashMap<String, String> map = null;
         if (host == null || host.equals("")) {
             map = null;
@@ -145,16 +145,16 @@ public class ApacheHttpClientNetworkRequests implements INetworkRequests {
             map.put("host", host);
         }
 
-        return requests(url, map);
+        return requests(url, map, method);
     }
 
     @Override
-    public String requests(String url, HashMap<String, String> head) {
+    public String requests(String url, HashMap<String, String> head, String method) {
         String result = null;
         BufferedReader reader = null;
         try {
-            HttpURLConnection con = getHttpURLConnection(url, head);
-            if (con.getResponseCode() == 200)
+            HttpURLConnection con = getHttpURLConnection(url, head, method);
+            if (con.getResponseCode() == HttpsURLConnection.HTTP_OK)
                 reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
             StringBuilder stringBuilder = new StringBuilder();
             String line = null;
@@ -180,10 +180,10 @@ public class ApacheHttpClientNetworkRequests implements INetworkRequests {
     }
 
     @Override
-    public byte[] requestsByteArr(String url, HashMap<String, String> head) {
+    public byte[] requestsByteArr(String url, HashMap<String, String> head, String method) {
         byte[] result = null;
         try {
-            HttpURLConnection con = getHttpURLConnection(url, head);
+            HttpURLConnection con = getHttpURLConnection(url, head, method);
             if (con.getResponseCode() == 200)
                 result = readStream(con.getInputStream());
         } catch (Exception e) {
@@ -194,18 +194,19 @@ public class ApacheHttpClientNetworkRequests implements INetworkRequests {
         return result;
     }
 
-    private HttpURLConnection getHttpURLConnection(String url, HashMap<String, String> head) throws IOException {
+    private HttpURLConnection getHttpURLConnection(String url, HashMap<String, String> head, String method) throws IOException {
         URL urlObj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) urlObj.openConnection();
         //https设置
 //        trustAllHosts(con);
         /* 3. 设置请求参数等 */
         // 请求方式
-        con.setRequestMethod("POST");
+        con.setRequestMethod(method);
         // 超时时间
         con.setConnectTimeout(CONNECTION_TIMEOUT);
-        // 设置是否输出
-        con.setDoOutput(true);
+        // 设置是否输出(get请求用不到)
+        if (!METHOD_GET.equalsIgnoreCase(method))
+            con.setDoOutput(true);
         // 设置是否读入
         con.setDoInput(true);
         // 设置是否使用缓存

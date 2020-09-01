@@ -332,12 +332,14 @@ public class NetworkManager extends Constants {
         public static boolean isNetConnected(Context context) {
             ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                Network[] networks = cm.getAllNetworks();
-                NetworkInfo networkInfo;
-                for (Network mNetwork : networks) {
-                    networkInfo = cm.getNetworkInfo(mNetwork);
-                    if (networkInfo.getState().equals(NetworkInfo.State.CONNECTED)) {
-                        return true;
+                if (cm != null) {
+                    Network[] networks = cm.getAllNetworks();
+                    NetworkInfo networkInfo;
+                    for (Network mNetwork : networks) {
+                        networkInfo = cm.getNetworkInfo(mNetwork);
+                        if (networkInfo.getState().equals(NetworkInfo.State.CONNECTED)) {
+                            return true;
+                        }
                     }
                 }
             } else {
