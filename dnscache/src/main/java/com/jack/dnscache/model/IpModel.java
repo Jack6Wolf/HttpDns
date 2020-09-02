@@ -36,10 +36,12 @@ public class IpModel {
      */
     public String ip = "";
     /**
-     * ip服务器对应的端口
+     * ip服务器对应的端口(默认80)
+     * 注意:请勿使用该字段，不准确！所有都为80
      *
      * 该字段映射类 {@link DBConstants#IP_COLUMN_PORT }字段 <br>
      */
+    @Deprecated
     public int port = -1;
     /**
      * ip服务器对应的sp运营商

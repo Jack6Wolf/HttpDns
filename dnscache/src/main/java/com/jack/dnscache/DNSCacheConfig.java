@@ -103,6 +103,8 @@ public class DNSCacheConfig {
 
             //是否排序
             ScoreManager.IS_SORT = data.IS_SORT.equals("1");
+            //是否开启过滤无效ip
+            DNSCache.isFilter = data.IS_FILTER.equals("1");
 
             String SPEEDTEST_PLUGIN_NUM = data.SPEEDTEST_PLUGIN_NUM;
             if (isNum(SPEEDTEST_PLUGIN_NUM)) {
@@ -148,7 +150,7 @@ public class DNSCacheConfig {
                 try {
                     INetworkRequests netWork = new ApacheHttpClientNetworkRequests();
                     String url = ConfigText_API + "?k=" + AppConfigUtil.getAppKey() + "&v=" + AppConfigUtil.getVersionName();
-                    String responseStr = netWork.requests(url,INetworkRequests.METHOD_GET);
+                    String responseStr = netWork.requests(url, INetworkRequests.METHOD_GET);
 //                    responseStr = createMockJsonStr();
                     Data data = Data.fromJson(responseStr);
                     if (null != data) {
@@ -260,7 +262,7 @@ public class DNSCacheConfig {
          */
         public String HTTPDNS_SWITCH = "";
         /**
-         * 测速间隔时间 默认180s
+         * 测速间隔时间 默认60s
          */
         public String SCHEDULE_SPEED_INTERVAL = "";
         /**
@@ -268,11 +270,11 @@ public class DNSCacheConfig {
          */
         public String SCHEDULE_LOG_INTERVAL = "";
         /**
-         * timer轮询器的间隔时间 默认180s
+         * timer轮询器的间隔时间 默认60s
          */
         public String SCHEDULE_TIMER_INTERVAL = "";
         /**
-         * ip数据过期延迟差值 默认10s
+         * ip数据过期延迟差值 默认60s
          */
         public String IP_OVERDUE_DELAY = "";
         /**
@@ -328,6 +330,10 @@ public class DNSCacheConfig {
          * 白名单 默认可解析所有
          */
         public ArrayList<String> DOMAIN_SUPPORT_LIST = new ArrayList<String>();
+        /**
+         * 是否过滤无效IP 默认开启
+         */
+        public String IS_FILTER = null;
 
         public static Data getInstance() {
             if (Instance == null) {
@@ -341,9 +347,9 @@ public class DNSCacheConfig {
             model.HTTPDNS_LOG_SAMPLE_RATE = "50";
             model.HTTPDNS_SWITCH = "1";
             model.SCHEDULE_LOG_INTERVAL = "3600000";
-            model.SCHEDULE_SPEED_INTERVAL = "180000";
-            model.SCHEDULE_TIMER_INTERVAL = "180000";
-            model.IP_OVERDUE_DELAY = "10";
+            model.SCHEDULE_SPEED_INTERVAL = "60000";
+            model.SCHEDULE_TIMER_INTERVAL = "60000";
+            model.IP_OVERDUE_DELAY = "60";
             //httpdns
             model.IS_MY_HTTP_SERVER = "0";
             model.HTTPDNS_SERVER_API.add("https://getman.cn/mock/v1/httpdns?host=");
@@ -362,7 +368,8 @@ public class DNSCacheConfig {
             model.SUCCESSNUM_PLUGIN_NUM = "10";
             model.ERRNUM_PLUGIN_NUM = "10";
             model.SUCCESSTIME_PLUGIN_NUM = "10";
-
+            //过滤模块
+            model.IS_FILTER = "1";
             return model;
         }
 
@@ -446,6 +453,12 @@ public class DNSCacheConfig {
                     }
                 }
 
+                // 过滤
+                if (jsonObj.isNull("IS_FILTER") == false) {
+                    String IS_FILTER = jsonObj.getString("IS_FILTER");
+                    model.IS_FILTER = IS_FILTER;
+                }
+
                 // httpdns服务地址
                 model.HTTPDNS_SERVER_API.clear();
                 if (jsonObj.isNull("HTTPDNS_SERVER_API") == false) {
@@ -459,6 +472,37 @@ public class DNSCacheConfig {
                 e.printStackTrace();
                 model = null;
             }
+            return model;
+        }
+
+        public static Data createMockConfig() {
+            Data model = new Data();
+            model.HTTPDNS_LOG_SAMPLE_RATE = "50";
+            model.HTTPDNS_SWITCH = "1";
+            model.SCHEDULE_LOG_INTERVAL = "3600000";
+            model.SCHEDULE_SPEED_INTERVAL = "60000";
+            model.SCHEDULE_TIMER_INTERVAL = "60000";
+            model.IP_OVERDUE_DELAY = "60";
+            //httpdns
+            model.IS_MY_HTTP_SERVER = "0";
+            model.HTTPDNS_SERVER_API.add("https://getman.cn/mock/mock/v1/httpdns?host=");
+            //三方httppoddns
+            model.IS_DNSPOD_SERVER = "1";
+            model.DNSPOD_SERVER_API = "http://119.29.29.29/d?ttl=1&dn=";
+            model.DNSPOD_ID = "";
+            model.DNSPOD_KEY = "";
+            //udpdns
+            model.IS_UDPDNS_SERVER = "1";
+            model.UDPDNS_SERVER_API = "8.8.8.8";
+            //排序模块
+            model.IS_SORT = "1";
+            model.SPEEDTEST_PLUGIN_NUM = "40";
+            model.PRIORITY_PLUGIN_NUM = "30";
+            model.SUCCESSNUM_PLUGIN_NUM = "10";
+            model.ERRNUM_PLUGIN_NUM = "10";
+            model.SUCCESSTIME_PLUGIN_NUM = "10";
+
+            model.IS_FILTER = "0";
             return model;
         }
 
@@ -484,6 +528,7 @@ public class DNSCacheConfig {
             buffer.append("\"DNSPOD_ID\":" + "\"" + DNSPOD_ID + "\",");
             buffer.append("\"DNSPOD_KEY\":" + "\"" + DNSPOD_KEY + "\",");
             buffer.append("\"IS_SORT\":" + "\"" + IS_SORT + "\",");
+            buffer.append("\"IS_FILTER\":" + "\"" + IS_FILTER + "\",");
             buffer.append("\"SPEEDTEST_PLUGIN_NUM\":" + "\"" + SPEEDTEST_PLUGIN_NUM + "\",");
             buffer.append("\"PRIORITY_PLUGIN_NUM\":" + "\"" + PRIORITY_PLUGIN_NUM + "\",");
             buffer.append("\"SUCCESSNUM_PLUGIN_NUM\":" + "\"" + SUCCESSNUM_PLUGIN_NUM + "\",");
@@ -502,37 +547,6 @@ public class DNSCacheConfig {
             buffer.append("]");
             buffer.append("}");
             return buffer.toString();
-        }
-
-
-        public static Data createMockConfig() {
-            Data model = new Data();
-            model.HTTPDNS_LOG_SAMPLE_RATE = "50";
-            model.HTTPDNS_SWITCH = "1";
-            model.SCHEDULE_LOG_INTERVAL = "3600000";
-            model.SCHEDULE_SPEED_INTERVAL = "180000";
-            model.SCHEDULE_TIMER_INTERVAL = "180000";
-            model.IP_OVERDUE_DELAY = "10";
-            //httpdns
-            model.IS_MY_HTTP_SERVER = "1";
-            model.HTTPDNS_SERVER_API.add("https://getman.cn/mock/mock/v1/httpdns?host=");
-            //三方httppoddns
-            model.IS_DNSPOD_SERVER = "1";
-            model.DNSPOD_SERVER_API = "http://119.29.29.29/d?ttl=1&dn=";
-            model.DNSPOD_ID = "";
-            model.DNSPOD_KEY = "";
-            //udpdns
-            model.IS_UDPDNS_SERVER = "1";
-            model.UDPDNS_SERVER_API = "8.8.8.8";
-            //排序模块
-            model.IS_SORT = "1";
-            model.SPEEDTEST_PLUGIN_NUM = "40";
-            model.PRIORITY_PLUGIN_NUM = "30";
-            model.SUCCESSNUM_PLUGIN_NUM = "10";
-            model.ERRNUM_PLUGIN_NUM = "10";
-            model.SUCCESSTIME_PLUGIN_NUM = "10";
-
-            return model;
         }
     }
 }

@@ -57,8 +57,10 @@ public class MainActivity extends AppCompatActivity {
         DomainInfo[] infoList = DNSCache.getInstance().getDomainServerIp("http://upms.startimestv.com/ums/v4/user/login");
         if (infoList != null) {
             for (DomainInfo domainInfo : infoList) {
-                Log.e("MainActivity", domainInfo.ip + "source:" + domainInfo.source);
+                Log.e("MainActivity", infoList.length+":"+domainInfo.ip + ":source:" + domainInfo.source);
             }
+        }else {
+            Log.e("MainActivity", "infoList null");
         }
     }
 }

@@ -1,7 +1,9 @@
 package com.jack.dnscache.cache;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.jack.dnscache.Tools;
 import com.jack.dnscache.model.DomainModel;
 import com.jack.dnscache.model.HttpDnsPack;
 import com.jack.dnscache.model.IpModel;
@@ -23,10 +25,11 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DnsCacheManager extends DNSCacheDatabaseHelper implements IDnsCache {
 
+    private static final int DOMAIN_TTL = 180;
     /**
      * 延迟差值，单位s
      */
-    public static int ip_overdue_delay = 10;
+    public static int ip_overdue_delay = 60;
     /**
      * 缓存初始容量值
      */
@@ -39,8 +42,6 @@ public class DnsCacheManager extends DNSCacheDatabaseHelper implements IDnsCache
      * 数据库操作类
      */
     private DNSCacheDatabaseHelper db = null;
-
-    private static final int DOMAIN_TTL=180;
     /**
      * 缓存链表
      */
@@ -65,7 +66,7 @@ public class DnsCacheManager extends DNSCacheDatabaseHelper implements IDnsCache
 
 
         DomainModel model = data.get(url);
-
+        Log.e("getDnsCache", model != null ? model.ipModelArr.size() + "" : "data null");
         if (model == null) {
             //缓存中没有从数据库中查找
             ArrayList<DomainModel> list = (ArrayList<DomainModel>) db.QueryDomainInfo(url, sp);
@@ -76,11 +77,16 @@ public class DnsCacheManager extends DNSCacheDatabaseHelper implements IDnsCache
             //查询到数据 添加到缓存中
             if (model != null) addMemoryCache(url, model);
 
+            for (DomainModel model1 : list) {
+                Log.e("getDnsCache", model1.toString());
+            }
+
         }
 
         if (model != null) {
             //检测是否过期
             if (isExpire(model, ip_overdue_delay)) {
+                Tools.log("DNSCache", "isExpire");
                 model = null;
             }
         }
@@ -197,15 +203,16 @@ public class DnsCacheManager extends DNSCacheDatabaseHelper implements IDnsCache
         for (IpModel ipModel : model.ipModelArr) {
             if (ipModel == null) return;
         }
+        Tools.log("DNSCache", "addMemoryCache:" + model.ipModelArr.size() + "");
         data.put(domain, model);
     }
 
 
     /**
-     * 检测是否过期，提前3秒刷一下
+     * 检测是否过期，提前10秒刷一下
      */
     private boolean isExpire(DomainModel domainModel) {
-        return isExpire(domainModel, -3);
+        return isExpire(domainModel, -10);
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.jack.dnscache.query;
 
+import com.jack.dnscache.Tools;
 import com.jack.dnscache.cache.IDnsCache;
 import com.jack.dnscache.dnsp.IDnsProvider;
 import com.jack.dnscache.dnsp.impl.LocalDns;
@@ -34,12 +35,13 @@ public class QueryManager implements IQuery {
      */
     @Override
     public DomainModel queryDomainIp(String sp, String host) {
-        // 从缓存中查询，如果为空 情况有两种 1：没有缓存数据 2：数据过期
+        // 从缓存数据库中查询，如果为空 情况有两种 1：没有缓存数据 2：数据过期
         DomainModel domainModel = getCacheDomainIp(sp, host);
 
         // 如果缓存是无效数据，则进行异步localdns，返回null
         if (inValidData(domainModel)) {
             //增加A记录缓存命中率
+            Tools.log("DNSCache","inValidData");
             RealTimeThreadPool.getInstance().execute(new LocalDnsTask(sp, host));
             return null;
         } else {

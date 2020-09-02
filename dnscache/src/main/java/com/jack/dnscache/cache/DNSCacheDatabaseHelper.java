@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.jack.dnscache.Tools;
 import com.jack.dnscache.model.DomainModel;
 import com.jack.dnscache.model.IpModel;
 
@@ -90,6 +91,7 @@ public class DNSCacheDatabaseHelper extends SQLiteOpenHelper implements DBConsta
                 //之所以删除该记录是为了保证 与过期ip数据断开关联id关系。
                 //比如：第一次拉下来的是1、2、3ip数据。第二次拉下来是4、5、6ip数据。那么1、2、3关联的did就会失效。 即：1、2、3记录成为无效数据
                 deleteDomainInfo(domainList);
+                Tools.log("Database", domainList.size() + "");
             }
             SQLiteDatabase db = getWritableDatabase();
             ContentValues cv = new ContentValues();
@@ -111,6 +113,8 @@ public class DNSCacheDatabaseHelper extends SQLiteOpenHelper implements DBConsta
                         ipModel.d_id = model.id;
                         ipModel.id = addIpModel(ipModel);
                     } else {
+                        //关联id
+                        temp.id = oldModel.id;
                         //直接更新
                         ipModel = temp;
                         ipModel.d_id = model.id;
@@ -305,6 +309,8 @@ public class DNSCacheDatabaseHelper extends SQLiteOpenHelper implements DBConsta
             SQLiteDatabase db = getWritableDatabase();
             try {
                 db.delete(TABLE_NAME_DOMAIN, DOMAIN_COLUMN_ID + " = ?", new String[]{String.valueOf(domain_id)});
+                //删除ip表
+                deleteIpInfo(domain_id);
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -313,23 +319,22 @@ public class DNSCacheDatabaseHelper extends SQLiteOpenHelper implements DBConsta
         }
     }
 
-//    /**
-//     * 根据域名id 删除服务器相关信息
-//     * @param domain_id
-//     */
-//    private void deleteIpInfo(long domain_id){
-//
-//        synchronized (synLock) {
-//            SQLiteDatabase db = getWritableDatabase();
-//            try {
-//                db.delete(TABLE_NAME_IP, IP_COLUMN_DOMAIN_ID + " = ?", new String[]{String.valueOf(domain_id)} ) ;
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            } finally {
-//                db.close();
-//            }
-//        }
-//    }
+    /**
+     * 根据域名id 删除服务器相关信息
+     * @param domain_id
+     */
+    private void deleteIpInfo(long domain_id) {
+        synchronized (synLock) {
+            SQLiteDatabase db = getWritableDatabase();
+            try {
+                db.delete(TABLE_NAME_IP, IP_COLUMN_DOMAIN_ID + " = ?", new String[]{String.valueOf(domain_id)});
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                db.close();
+            }
+        }
+    }
 
     /**
      * 根据 ID 删除服务器信息

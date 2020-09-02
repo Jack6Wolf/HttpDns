@@ -45,9 +45,13 @@ public class DNSCache {
      */
     public static boolean isEnable = true;
     /**
+     * 是否开启过滤无效ip
+     */
+    public static boolean isFilter = true;
+    /**
      * 定时器任务轮询间隔
      */
-    public static int timer_interval = 180 * 1000;
+    public static int timer_interval = 60 * 1000;
     private static DNSCache Instance = null;
     private static Context sContext;
     private static Object lock = new Object();
@@ -215,6 +219,9 @@ public class DNSCache {
 
             // 如果本地cache 和 内置数据都没有 返回null，然后马上查询数据
             if (null == domainModel || domainModel.id == -1) {
+                if (domainModel==null)
+                Tools.log("DNSCache","domainModel null");
+                else  Tools.log("DNSCache","domainModel id -1");
                 checkUpdates(host, true);
                 if (null == domainModel) {
                     return null;
@@ -228,6 +235,7 @@ public class DNSCache {
             int[] sourceIpArray = scoreManager.ListToInt(result);
 
             if (scoreIpArray == null || scoreIpArray.length == 0) {
+                Tools.log("DNSCache","scoreIpArray null");
                 return null; // 转换错误 终端后续流程
             }
 
@@ -248,10 +256,15 @@ public class DNSCache {
      */
     private ArrayList<IpModel> filterInvalidIp(ArrayList<IpModel> ipModelArr) {
         ArrayList<IpModel> result = new ArrayList<IpModel>();
-        for (IpModel ipModel : ipModelArr) {
-            if (!("" + SpeedtestManager.MAX_OVERTIME_RTT).equals(ipModel.rtt)) {
-                result.add(ipModel);
+        //开启过滤则只返回有效ip。
+        if (isFilter) {
+            for (IpModel ipModel : ipModelArr) {
+                if (!("" + SpeedtestManager.MAX_OVERTIME_RTT).equals(ipModel.rtt)) {
+                    result.add(ipModel);
+                }
             }
+        } else {
+            result.addAll(ipModelArr);
         }
         return result;
     }
@@ -342,7 +355,8 @@ public class DNSCache {
      */
     public void onNetworkStatusChanged(NetworkInfo networkInfo) {
         if (null != dnsCacheManager) {
-            dnsCacheManager.clearMemoryCache();
+//            dnsCacheManager.clearMemoryCache();
+//            Log.e("onNetworkStatusChanged","clearMemoryCache");
         }
     }
 
