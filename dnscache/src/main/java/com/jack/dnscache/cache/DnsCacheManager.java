@@ -1,7 +1,6 @@
 package com.jack.dnscache.cache;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.jack.dnscache.Tools;
 import com.jack.dnscache.model.DomainModel;
@@ -26,6 +25,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DnsCacheManager extends DNSCacheDatabaseHelper implements IDnsCache {
 
     private static final int DOMAIN_TTL = 180;
+    /**
+     * 是否开启使用过期IP 默认不使用
+     */
+    public static boolean USE_EXPIRE = false;
     /**
      * 延迟差值，单位s
      */
@@ -66,7 +69,7 @@ public class DnsCacheManager extends DNSCacheDatabaseHelper implements IDnsCache
 
 
         DomainModel model = data.get(url);
-        Log.e("getDnsCache", model != null ? model.ipModelArr.size() + "" : "data null");
+        Tools.log("getDnsCache", model != null ? model.ipModelArr.size() + "" : "data null");
         if (model == null) {
             //缓存中没有从数据库中查找
             ArrayList<DomainModel> list = (ArrayList<DomainModel>) db.QueryDomainInfo(url, sp);
@@ -78,12 +81,12 @@ public class DnsCacheManager extends DNSCacheDatabaseHelper implements IDnsCache
             if (model != null) addMemoryCache(url, model);
 
             for (DomainModel model1 : list) {
-                Log.e("getDnsCache", model1.toString());
+                Tools.log("getDnsCache", model1.toString());
             }
 
         }
-
-        if (model != null) {
+        //开启使用就不执行以下过期检测
+        if (model != null && !USE_EXPIRE) {
             //检测是否过期
             if (isExpire(model, ip_overdue_delay)) {
                 Tools.log("DNSCache", "isExpire");

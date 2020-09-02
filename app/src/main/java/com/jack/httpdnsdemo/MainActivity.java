@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
                 while (true) {
                     getIp();
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(15000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

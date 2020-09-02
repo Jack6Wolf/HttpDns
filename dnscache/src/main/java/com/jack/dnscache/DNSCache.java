@@ -219,9 +219,8 @@ public class DNSCache {
 
             // 如果本地cache 和 内置数据都没有 返回null，然后马上查询数据
             if (null == domainModel || domainModel.id == -1) {
-                if (domainModel==null)
-                Tools.log("DNSCache","domainModel null");
-                else  Tools.log("DNSCache","domainModel id -1");
+                if (domainModel == null) Tools.log("DNSCache", "domainModel null");
+                else Tools.log("DNSCache", "domainModel id -1");
                 checkUpdates(host, true);
                 if (null == domainModel) {
                     return null;
@@ -235,7 +234,7 @@ public class DNSCache {
             int[] sourceIpArray = scoreManager.ListToInt(result);
 
             if (scoreIpArray == null || scoreIpArray.length == 0) {
-                Tools.log("DNSCache","scoreIpArray null");
+                Tools.log("DNSCache", "scoreIpArray null");
                 return null; // 转换错误 终端后续流程
             }
 

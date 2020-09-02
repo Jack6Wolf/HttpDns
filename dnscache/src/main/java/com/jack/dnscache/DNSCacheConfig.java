@@ -105,7 +105,8 @@ public class DNSCacheConfig {
             ScoreManager.IS_SORT = data.IS_SORT.equals("1");
             //是否开启过滤无效ip
             DNSCache.isFilter = data.IS_FILTER.equals("1");
-
+            //是否开启使用过期ip
+            DnsCacheManager.USE_EXPIRE = data.USE_EXPIRE.equals("1");
             String SPEEDTEST_PLUGIN_NUM = data.SPEEDTEST_PLUGIN_NUM;
             if (isNum(SPEEDTEST_PLUGIN_NUM)) {
                 PlugInManager.SpeedTestPluginNum = Float.parseFloat(SPEEDTEST_PLUGIN_NUM);
@@ -334,6 +335,10 @@ public class DNSCacheConfig {
          * 是否过滤无效IP 默认开启
          */
         public String IS_FILTER = null;
+        /**
+         * 是否开启使用过期ip 默认不开启
+         */
+        public String USE_EXPIRE = null;
 
         public static Data getInstance() {
             if (Instance == null) {
@@ -370,6 +375,7 @@ public class DNSCacheConfig {
             model.SUCCESSTIME_PLUGIN_NUM = "10";
             //过滤模块
             model.IS_FILTER = "1";
+            model.USE_EXPIRE = "1";
             return model;
         }
 
@@ -458,6 +464,11 @@ public class DNSCacheConfig {
                     String IS_FILTER = jsonObj.getString("IS_FILTER");
                     model.IS_FILTER = IS_FILTER;
                 }
+                // 使用过期ip
+                if (jsonObj.isNull("USE_EXPIRE") == false) {
+                    String USE_EXPIRE = jsonObj.getString("USE_EXPIRE");
+                    model.USE_EXPIRE = USE_EXPIRE;
+                }
 
                 // httpdns服务地址
                 model.HTTPDNS_SERVER_API.clear();
@@ -503,6 +514,7 @@ public class DNSCacheConfig {
             model.SUCCESSTIME_PLUGIN_NUM = "10";
 
             model.IS_FILTER = "0";
+            model.USE_EXPIRE = "0";
             return model;
         }
 
@@ -529,6 +541,7 @@ public class DNSCacheConfig {
             buffer.append("\"DNSPOD_KEY\":" + "\"" + DNSPOD_KEY + "\",");
             buffer.append("\"IS_SORT\":" + "\"" + IS_SORT + "\",");
             buffer.append("\"IS_FILTER\":" + "\"" + IS_FILTER + "\",");
+            buffer.append("\"USE_EXPIRE\":" + "\"" + USE_EXPIRE + "\",");
             buffer.append("\"SPEEDTEST_PLUGIN_NUM\":" + "\"" + SPEEDTEST_PLUGIN_NUM + "\",");
             buffer.append("\"PRIORITY_PLUGIN_NUM\":" + "\"" + PRIORITY_PLUGIN_NUM + "\",");
             buffer.append("\"SUCCESSNUM_PLUGIN_NUM\":" + "\"" + SUCCESSNUM_PLUGIN_NUM + "\",");
