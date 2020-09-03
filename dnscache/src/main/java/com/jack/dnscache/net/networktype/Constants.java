@@ -31,6 +31,10 @@ public class Constants {
      * 4G网络
      */
     public final static short NETWORK_TYPE_4G = 4;
+    /**
+     * 5G网络
+     */
+    public final static short NETWORK_TYPE_5G = 5;
 
     // //网络运营商标识码///
 

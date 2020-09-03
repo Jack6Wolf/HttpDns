@@ -280,6 +280,8 @@ public class NetworkManager extends Constants {
                                 return Constants.NETWORK_TYPE_3G;
                             case 13: // 对应TelephonyManager.NETWORK_TYPE_LTE
                                 return Constants.NETWORK_TYPE_4G;
+                            case 20:// 对应TelephonyManager.NETWORK_TYPE_NR
+                                return Constants.NETWORK_TYPE_5G;
                             case TelephonyManager.NETWORK_TYPE_UNKNOWN:
                             default:
                                 return Constants.NETWORK_TYPE_UNKNOWN;
